@@ -1,14 +1,35 @@
-## ambhtmx
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ambhtmx
+
+<!-- badges: start -->
+<!-- badges: end -->
 
 Creating an ambiorix + htmx app.
 
+## Installation
+
+You can install the development version of ambhtmx from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("jrosell/ambhtmx")
+```
 
 ## Examples
-
-How to run the examples:
-
-* Clone this repository.
-* Install all the prerequisites and run the examples in inst/examples folder.
 
 ### [Incrementing a counter](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/01-counter.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/01.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/01-counter.R)
