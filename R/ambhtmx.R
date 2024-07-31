@@ -1,4 +1,4 @@
-#' Creating an ambhtmx app
+#' Creating an ambiorix + htmx app
 #' @export
 ambhtmx_app <- \(
     dbname = NULL, 
