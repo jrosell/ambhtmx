@@ -1,6 +1,6 @@
 # ambhtmx
 
-Creating an ambiorix + htmx app.
+Build a Full-stack App with ambiorix and htmx.
 
 ## Installation
 
