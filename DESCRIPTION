@@ -4,7 +4,7 @@ Version: 0.0.0.9001
 Authors@R: 
     person("Jordi", "Rosell", , "jroselln@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4349-1458"))
-Description: Build a Full-stack App with ambiorix and htmx.
+Description: Build a Full-stack R App with ambiorix and htmx.
 License: CC0
 Encoding: UTF-8
 Language: en

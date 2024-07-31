@@ -10,7 +10,7 @@ rebuild_docs_and_check <- function() {
   previous_version <- "0.0.0.9000"
   usethis::use_description(list(
       "Title" = "ambhtmx",
-      "Description" = "Build a Full-stack App with ambiorix and htmx.",
+      "Description" = "Build a Full-stack R App with ambiorix and htmx.",
       "Version" = previous_version,
       "Authors@R" = utils::person(
           "Jordi", "Rosell",
