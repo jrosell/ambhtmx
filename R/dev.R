@@ -37,7 +37,6 @@ rebuild_docs_and_check <- function() {
       "purrr",
       "b64",
       "tibble",
-      "ambiorix",
       "uwu",
       "htmltools",
       "glue",
@@ -52,6 +51,14 @@ rebuild_docs_and_check <- function() {
   imports_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Imports"); x}
   )
+  dev_packages <- c(
+    "ambiorix",
+    "scilis"
+  )
+  dev_packages |> purrr::map(
+    \(x){usethis::use_dev_package(x, type = "Imports"); x}
+  )
+    
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
   # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)

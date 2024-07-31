@@ -10,7 +10,8 @@ ambhtmx_app(
   host = "127.0.0.1",
   port = "8000",
   live = FALSE,
-  renderer = NULL
+  renderer = NULL,
+  auth = tibble(user = NULL, password = NULL)
 )
 }
 \description{

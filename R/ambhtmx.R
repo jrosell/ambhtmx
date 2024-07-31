@@ -6,7 +6,8 @@ ambhtmx_app <- \(
     host = "127.0.0.1", 
     port = "8000", 
     live = FALSE,     
-    renderer = NULL) {
+    renderer = NULL,
+    auth = tibble(user = NULL, password = NULL)) {
   pool <- NULL
   data <- NULL
   name <- NULL
@@ -66,7 +67,14 @@ ambhtmx_app <- \(
     pool::poolReturn(con)
     invisible(NULL)
   }
-  list(
+  data_auth <- \(context, value = NULL){
+    con <- pool::poolCheckout(context$pool)
+    sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
+    result <- DBI::dbExecute(con, sql)  
+    pool::poolReturn(con)
+    invisible(NULL)
+  }
+  r <- list(
     app = ambiorix::Ambiorix$new(host = host, port = port), 
     context = list(pool = pool, name = name, value = value),
     operations = list(
@@ -76,6 +84,12 @@ ambhtmx_app <- \(
       data_delete = data_delete
     )
   )
+  if (nrow(auth) > 0){
+    r$operations$data_auth <- \(user = NULL, password = NULL) {
+      auth |> filter(.data["user"] == user, .data["password"] == password)
+    }
+  }  
+  return(r)
 }
 
 #' @noRd
@@ -142,3 +156,4 @@ render_plot <- \(p){
   p_txt <- b64::encode_file(p_file)
   tags$img(src = glue::glue("data:image/png;base64,{p_txt}"))
 }
+
