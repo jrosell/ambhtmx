@@ -1,6 +1,6 @@
 # ambhtmx
 
-Build a Full-stack App with ambiorix and htmx.
+Build a Full-stack R App with ambiorix and htmx.
 
 ## Installation
 
