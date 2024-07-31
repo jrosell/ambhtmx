@@ -55,4 +55,5 @@ app$post("/increment", \(req, res){
   ))
 })
 
-app$start()
+#' Start the app with all the previous defined routes
+app$start(open = FALSE)

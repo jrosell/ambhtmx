@@ -290,4 +290,4 @@ app$delete("/delete_todo/:id", \(req, res) {
 
 
 #' Start the app with all the previous defined routes
-app$start()
+app$start(open = FALSE)

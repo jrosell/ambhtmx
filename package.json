@@ -1,0 +1,19 @@
+{
+  "name": "ambhtmx",
+  "version": "1.0.0",
+  "description": "Build a Full-stack R App with ambiorix and htmx.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "man": "man"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

@@ -10,8 +10,9 @@ ambhtmx_app <- \(
   pool <- NULL
   data <- NULL
   name <- NULL
-  if (live) {
-    warning("live = TRUE not yet implemented.")
+  if (!isFALSE(live)) {
+    warning("live = TRUE is alpha")    
+    cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
   }
   if (nrow(value) == 1) {
     create_table <- !is.null(dbname) && !file.exists(dbname)

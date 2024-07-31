@@ -7,3 +7,5 @@
 *.sqlite
 /.quarto/
 *.Rproj
+node_modules/
+package-lock.json

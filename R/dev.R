@@ -26,7 +26,8 @@ rebuild_docs_and_check <- function() {
       "pak",
       "pkgdown",
       "devtools",
-      "usethis"
+      "usethis",
+      "processx"
   )
   suggests_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Suggests"); x} 

@@ -22,13 +22,13 @@ library(htmltools)
 
 #' Starting the app
 counter <- 0
-c(app, context, operations) %<-% ambhtmx_app()
+c(app, context, operations) %<-% ambhtmx_app(live = this.path::this.path())
 
 #' Main page of the app
 app$get("/", \(req, res){
   html <- render_page(
     title = "ambiorix + htmx example",
-    main = withTags(div(style = "margin: 20px", tagList(
+    main = withTags(div(style = "margin: 100px", tagList(
         h1("ambiorix + htmx example"),
         p(id = "counter", glue("Counter is set to {counter}")),
         button(
