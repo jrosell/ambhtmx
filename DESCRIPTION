@@ -19,7 +19,7 @@ Suggests:
     processx,
     usethis
 Imports: 
-    ambiorix,
+    ambiorix (>= 2.1.0),
     b64,
     DBI,
     dplyr,
@@ -30,7 +30,11 @@ Imports:
     purrr,
     rlang,
     RSQLite,
+    scilis (>= 0.0.0.9000),
     stringr,
     tibble,
     uwu,
     zeallot
+Remotes: 
+    devOpifex/ambiorix,
+    devOpifex/scilis
