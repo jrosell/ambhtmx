@@ -1,4 +1,5 @@
 #' Creating an ambhtmx app
+#' @export
 ambhtmx_app <- \(
     dbname = NULL, 
     value = tibble(), 
@@ -111,6 +112,7 @@ render_html <- \(html){
 }
 
 #' Render a custom page with a custom title and main content
+#' @export
 render_page <- \(title, main) {    
   html <- tagList(
     tags$head(
@@ -129,11 +131,13 @@ render_page <- \(title, main) {
 }
 
 #' Render tags to character vector
+#' @export
 render_tags <- \(...) {
   as.character(tagList(...))
 }
 
 #' Render imatge or ggplot to image tag
+#' @export
 render_plot <- \(p){
   png(p_file <- tempfile(fileext = ".png")); print(p); dev.off()
   p_txt <- b64::encode_file(p_file)
