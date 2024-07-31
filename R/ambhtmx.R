@@ -54,7 +54,6 @@ ambhtmx_app <- \(
     con <- pool::poolCheckout(context$pool)
     columns_to_update <- paste0(paste0(names(value[-1]), "=\"", value[-1], "\""), collapse = ", ")  
     sql <- glue::glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{value$id}\"")
-    print(sql)
     result <- DBI::dbExecute(con, sql)  
     pool::poolReturn(con)
     return(result)
@@ -62,7 +61,6 @@ ambhtmx_app <- \(
   data_delete <- \(context, value = NULL){
     con <- pool::poolCheckout(context$pool)
     sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
-    print(sql)
     result <- DBI::dbExecute(con, sql)  
     pool::poolReturn(con)
     invisible(NULL)
