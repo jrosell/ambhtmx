@@ -1,15 +1,12 @@
 # ambhtmx
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 Creating an ambiorix + htmx app.
 
 ## Installation
 
 You can install the development version of ambhtmx from [GitHub](https://github.com/) with:
 
-``` r
+```
 # install.packages("remotes")
 remotes::install_github("jrosell/ambhtmx")
 ```
