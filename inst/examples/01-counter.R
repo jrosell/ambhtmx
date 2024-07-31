@@ -1,4 +1,10 @@
 #' Loading required packages
+rlang::check_installed("ambhtmx", action = \(pkg, ...) remotes::install_github("jrosell/ambhtmx"))
+rlang::check_installed("ambiorix", action = \(pkg, ... ) remotes::install_github("devOpifex/ambiorix"))
+rlang::check_installed("tidyverse")
+rlang::check_installed("zeallot")
+rlang::check_installed("glue")
+rlang::check_installed("htmltools")
 library(ambhtmx)
 library(ambiorix)
 library(tidyverse)
