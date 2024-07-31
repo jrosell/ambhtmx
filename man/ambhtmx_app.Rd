@@ -2,7 +2,7 @@
 % Please edit documentation in R/ambhtmx.R
 \name{ambhtmx_app}
 \alias{ambhtmx_app}
-\title{Creating an ambhtmx app}
+\title{Creating an ambiorix + htmx app}
 \usage{
 ambhtmx_app(
   dbname = NULL,
@@ -14,5 +14,5 @@ ambhtmx_app(
 )
 }
 \description{
-Creating an ambhtmx app
+Creating an ambiorix + htmx app
 }

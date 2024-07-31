@@ -57,7 +57,7 @@ rebuild_docs_and_check <- function() {
   devtools::load_all()
   usethis::use_namespace()
   devtools::document()
-  # pkgdown::build_site()
+  pkgdown::build_site()
   devtools::check()
   usethis::use_version(which = "dev", push = FALSE)
 }
