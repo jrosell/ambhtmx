@@ -16,6 +16,7 @@ Suggests:
     devtools,
     pak,
     pkgdown,
+    processx,
     usethis
 Imports: 
     ambiorix,
