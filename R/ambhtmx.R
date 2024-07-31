@@ -2,7 +2,7 @@
 #' @export
 ambhtmx_app <- \(
     dbname = NULL, 
-    value = tibble(), 
+    value = tibble::tibble(), 
     host = "127.0.0.1", 
     port = "8000", 
     live = FALSE,     
@@ -15,15 +15,15 @@ ambhtmx_app <- \(
   }
   if (nrow(value) == 1) {
     create_table <- !is.null(dbname) && !file.exists(dbname)
-    pool <- dbPool(
+    pool <- pool::dbPool(
       drv = RSQLite::SQLite(),
       dbname = dbname
     )
     on.exit(\() {
-      poolClose(pool)
+      pool::poolClose(pool)
     })
-    con <- poolCheckout(pool)
-    name <- str_split(dbname, fixed("."))[[1]][1]
+    con <- pool::poolCheckout(pool)
+    name <- stringr::str_split(dbname, stringr::fixed("."))[[1]][1]
     if (create_table) {            
       DBI::dbWriteTable(
         con,
@@ -32,43 +32,43 @@ ambhtmx_app <- \(
       )      
     }
     if (file.exists(dbname)) {
-      data <- tbl(con, name) |> collect()
+      data <- dplyr::tbl(con, name) |> dplyr::collect()
     }
-    poolReturn(con)
+    pool::poolReturn(con)
   }
   context = list(pool = pool, name = name, value = value)
   data_add <- \(context, value = NULL){
     if (is.null(value)) stop("Value is required")
-    con <- poolCheckout(context$pool)     
+    con <- pool::poolCheckout(context$pool)     
     value$id <- uwu::new_v4(1)
     DBI::dbAppendTable(con, name = context$name, value = value)
-    poolReturn(con)
+    pool::poolReturn(con)
   }
   data_read <- \(context){
-    con <- poolCheckout(context$pool)
-    df <- tbl(con, context$name) |> filter(id != "") |> collect()
-    poolReturn(con)
+    con <- pool::poolCheckout(context$pool)
+    df <- dplyr::tbl(con, context$name) |> dplyr::filter(.data$id != "") |> dplyr::collect()
+    pool::poolReturn(con)
     return(df)
   }
   data_update <- \(context, value = NULL){
-    con <- poolCheckout(context$pool)
+    con <- pool::poolCheckout(context$pool)
     columns_to_update <- paste0(paste0(names(value[-1]), "=\"", value[-1], "\""), collapse = ", ")  
-    sql <- glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{value$id}\"")
+    sql <- glue::glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{value$id}\"")
     print(sql)
-    result <- dbExecute(con, sql)  
-    poolReturn(con)
+    result <- DBI::dbExecute(con, sql)  
+    pool::poolReturn(con)
     return(result)
   }
   data_delete <- \(context, value = NULL){
-    con <- poolCheckout(context$pool)
-    sql <- glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
+    con <- pool::poolCheckout(context$pool)
+    sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
     print(sql)
-    result <- dbExecute(con, sql)  
-    poolReturn(con)
-    return(df)
+    result <- DBI::dbExecute(con, sql)  
+    pool::poolReturn(con)
+    invisible(NULL)
   }
   list(
-    app = Ambiorix$new(host = host, port = port), 
+    app = ambiorix::Ambiorix$new(host = host, port = port), 
     context = list(pool = pool, name = name, value = value),
     operations = list(
       data_add = data_add,
@@ -81,10 +81,10 @@ ambhtmx_app <- \(
 
 #' @noRd
 render_html <- \(html){
-  rendered <- renderTags(html)
+  rendered <- htmltools::renderTags(html)
   deps <- lapply(rendered$dependencies, function(dep) {
-    dep <- copyDependencyToDir(dep, "lib", FALSE)
-    dep <- makeDependencyRelative(dep, NULL, FALSE)
+    dep <- htmltools::copyDependencyToDir(dep, "lib", FALSE)
+    dep <- htmltools::makeDependencyRelative(dep, NULL, FALSE)
     dep
   })
   bodyBegin <- if (!isTRUE(grepl("<body\\b", rendered$html[1], ignore.case = TRUE))) {
@@ -101,7 +101,7 @@ render_html <- \(html){
     "<meta charset=\"utf-8\"/>",
     rendered$head,
     "<style>body{background-color:white;}</style>",
-    renderDependencies(deps, c("href", "file")),
+    htmltools::renderDependencies(deps, c("href", "file")),
     "</head>",
     bodyBegin,
     rendered$html,
@@ -114,7 +114,7 @@ render_html <- \(html){
 #' Render a custom page with a custom title and main content
 #' @export
 render_page <- \(title, main) {    
-  html <- tagList(
+  html <- htmltools::tagList(
     tags$head(
       tags$title(title),
       tags$style("body {background-color:white;}"),
@@ -133,13 +133,13 @@ render_page <- \(title, main) {
 #' Render tags to character vector
 #' @export
 render_tags <- \(...) {
-  as.character(tagList(...))
+  as.character(htmltools::tagList(...))
 }
 
 #' Render imatge or ggplot to image tag
 #' @export
 render_plot <- \(p){
-  png(p_file <- tempfile(fileext = ".png")); print(p); dev.off()
+  grDevices::png(p_file <- tempfile(fileext = ".png")); print(p); grDevices::dev.off()
   p_txt <- b64::encode_file(p_file)
-  tags$img(src = glue("data:image/png;base64,{p_txt}"))
+  tags$img(src = glue::glue("data:image/png;base64,{p_txt}"))
 }
