@@ -1,4 +1,12 @@
 #' Loading required packages
+if(!"rlang" %in% installed.packages()){
+  if(!interactive()) { stop("The package \"rlang\" is required.") }
+  cat("The package \"rlang\" is required.\n✖ Would you like to install it?\n\n1: Yes\n2: No\n\nSelection:")  
+  if (readLines(n = 1) == "1"){
+      install.packages("rlang")
+  }  
+}
+rlang::check_installed("remotes")
 rlang::check_installed("ambhtmx", action = \(pkg, ...) remotes::install_github("jrosell/ambhtmx"))
 rlang::check_installed("ambiorix", action = \(pkg, ... ) remotes::install_github("devOpifex/ambiorix"))
 rlang::check_installed("tidyverse")
