@@ -1,20 +1,5 @@
-#' Loading required packages
-if(!"rlang" %in% installed.packages()){
-  if(!interactive()) { stop("The package \"rlang\" is required.") }
-  cat("The package \"rlang\" is required.\n✖ Would you like to install it?\n\n1: Yes\n2: No\n\nSelection:")  
-  if (readLines(n = 1) == "1"){
-      install.packages("rlang")
-  }  
-}
-rlang::check_installed("remotes")
-rlang::check_installed("ambhtmx", action = \(pkg, ...) remotes::install_github("jrosell/ambhtmx"))
-rlang::check_installed("ambiorix", action = \(pkg, ... ) remotes::install_github("devOpifex/ambiorix"))
-rlang::check_installed("tidyverse")
-rlang::check_installed("zeallot")
-rlang::check_installed("glue")
-rlang::check_installed("htmltools")
-rlang::check_installed("scilis")
-library(ambhtmx)
+devtools::load_all()
+# library(ambhtmx)
 library(ambiorix)
 library(scilis)
 library(tidyverse)
@@ -27,10 +12,10 @@ counter <- 0
 c(app, context, operations) %<-% ambhtmx_app("todo.sqlite", value = tibble(
   id = character(1), item = character(1), status = integer(1)
 ))
-data_add <- operations$data_add
-data_read <- operations$data_read
-data_update <- operations$data_update
-data_delete <- operations$data_delete
+data_add <- operations$add_row
+data_read <- operations$read_rows
+data_update <- operations$update_row
+data_delete <- operations$delete_row
 
 #' Some todo functions
 todo_page <- \(items) {
@@ -134,7 +119,6 @@ create_list_item <- \(item, id, status) {
           tags$div(
             tags$input(
               type = "checkbox",
-              class = "form-check-input me-1",
               value = "",
               id = the_id,
               name = "item_id",
@@ -217,9 +201,9 @@ create_button <- \(..., class = "rounded-1", type = "button") {
 app$get("/", \(req, res){
   todos <- data_read(context = context)
   html <- render_page(
-    title = "ambiorix + htmx example",
+    page_title = "ambhtmx todo example",
     main = withTags(div(style = "margin: 20px", tagList(
-      h1("ambiorix + htmx example"),
+      h1("ambhtmx todo example"),
       todo_page(items = data_read(context = context))
     )))
   )
@@ -271,7 +255,7 @@ app$put("/check_todo/:id", \(req, res) {
   item_id <- req$params$id %||% ""
   is_valid <- !identical(item_id, "")
   if (is_valid) {    
-    status_value <- data_read(context =context) |> filter(id == item_id) |> pull(status) |> 
+    status_value <- data_read(context = context) |> filter(id == item_id) |> pull(status) |> 
       as.logical()
     data_update(context = context, value = tibble(id = item_id, status = as.integer(!status_value)))
   }
@@ -292,4 +276,4 @@ app$delete("/delete_todo/:id", \(req, res) {
 
 
 #' Start the app with all the previous defined routes
-app$start(open = FALSE)
+app$start()

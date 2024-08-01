@@ -13,7 +13,8 @@ rlang::check_installed("tidyverse")
 rlang::check_installed("zeallot")
 rlang::check_installed("glue")
 rlang::check_installed("htmltools")
-library(ambhtmx)
+devtools::load_all()
+# library(ambhtmx)
 library(ambiorix)
 library(tidyverse)
 library(zeallot)
@@ -26,16 +27,22 @@ c(app, context, operations) %<-% ambhtmx_app()
 
 #' Main page of the app
 app$get("/", \(req, res){
-  html <- render_page(
-    title = "ambiorix + htmx example",
-    main = withTags(div(style = "margin: 20px", tagList(
-        h1("ambiorix + htmx example"),
-        p(id = "counter", glue("Counter is set to {counter}")),
-        button(
-          "+1",
-          `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
-        )
-    )))
+  html <- ""
+  tryCatch(
+    {
+      html <- render_page(
+        page_title = "ambhtmx counter example",
+        main = withTags(div(style = "margin: 20px", tagList(
+            h1("ambhtmx counter example"),
+            p(id = "counter", glue("Counter is set to {counter}")),
+            button(
+              "+1",
+              `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
+            )
+        )))
+      )
+    },
+    error = \(e) html <- p(e)
   )
   res$send(html)
 })
@@ -47,4 +54,4 @@ app$post("/increment", \(req, res){
 })
 
 #' Start the app with all the previous defined routes
-app$start(open = FALSE)
+app$start()

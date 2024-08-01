@@ -1,18 +1,3 @@
-#' Loading required packages
-if(!"rlang" %in% installed.packages()){
-  if(!interactive()) { stop("The package \"rlang\" is required.") }
-  cat("The package \"rlang\" is required.\n✖ Would you like to install it?\n\n1: Yes\n2: No\n\nSelection:")  
-  if (readLines(n = 1) == "1"){
-      install.packages("rlang")
-  }  
-}
-rlang::check_installed("remotes")
-rlang::check_installed("ambhtmx", action = \(pkg, ...) remotes::install_github("jrosell/ambhtmx"))
-rlang::check_installed("ambiorix", action = \(pkg, ... ) remotes::install_github("devOpifex/ambiorix"))
-rlang::check_installed("tidyverse")
-rlang::check_installed("zeallot")
-rlang::check_installed("glue")
-rlang::check_installed("htmltools")
 library(ambhtmx)
 library(ambiorix)
 library(tidyverse)
@@ -35,7 +20,7 @@ generate_plot <- \(){
 app$get("/", \(req, res){
   rexp_plot <- generate_plot()
   html <- render_page(
-    title = "ambiorix + htmx example",
+    page_title = "ambhtmx slider example",
     main = withTags(div(style = "margin: 20px", tagList(
       h1("ambiorix + htmx example"),
       div(id = "counter", withTags(tagList(
@@ -89,4 +74,4 @@ app$post("/increment_slider", \(req, res){
 })
 
 #' Start the app with all the previous defined routes
-app$start(open = FALSE)
+app$start()

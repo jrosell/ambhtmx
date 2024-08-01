@@ -1,17 +1,21 @@
+#' @noRd
+is_debug_enabled <- \() TRUE
+
 #' Creating an ambiorix + htmx app
 #' @export
 ambhtmx_app <- \(
-    dbname = NULL, 
-    value = tibble::tibble(), 
-    host = "127.0.0.1", 
-    port = "8000", 
-    live = FALSE,     
-    renderer = NULL,
-    auth = tibble(user = NULL, password = NULL)) {
+      dbname = NULL, 
+      value = tibble::tibble(), 
+      host = "127.0.0.1", 
+      port = "8000", 
+      live = "",
+      render_rows = NULL,
+      render_row = NULL
+    ) {
   pool <- NULL
   data <- NULL
   name <- NULL
-  if (!isFALSE(live)) {
+  if (live != "") {
     warning("live = TRUE is alpha")    
     cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
   }
@@ -39,57 +43,99 @@ ambhtmx_app <- \(
     pool::poolReturn(con)
   }
   context = list(pool = pool, name = name, value = value)
-  data_add <- \(context, value = NULL){
+  add_row <- \(value = NULL, context = NULL){
+    if (is.null(context)){
+      penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
     if (is.null(value)) stop("Value is required")
     con <- pool::poolCheckout(context$pool)     
-    value$id <- uwu::new_v4(1)
+    if (is.null(value$id)) value$id <- uwu::new_v4(1)
     DBI::dbAppendTable(con, name = context$name, value = value)
     pool::poolReturn(con)
+    return(value$id)
   }
-  data_read <- \(context){
+  read_row <- \(value = NULL,context = NULL, id = NULL){
+    if (is.null(context)){
+      penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
+    if(is.null(id)) id = value$id
     con <- pool::poolCheckout(context$pool)
-    df <- dplyr::tbl(con, context$name) |> dplyr::filter(.data$id != "") |> dplyr::collect()
+    df <- dplyr::tbl(con, context$name) |>
+      dplyr::filter(.data[["id"]] == {{ id }}) |>
+      dplyr::collect()
     pool::poolReturn(con)
     return(df)
   }
-  data_update <- \(context, value = NULL){
+  read_rows <- \(context = NULL, collect = TRUE){
+    if (is.null(context)){
+      penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
     con <- pool::poolCheckout(context$pool)
-    columns_to_update <- paste0(paste0(names(value[-1]), "=\"", value[-1], "\""), collapse = ", ")  
-    sql <- glue::glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{value$id}\"")
-    result <- DBI::dbExecute(con, sql)  
+    df <- dplyr::tbl(con, context$name) |>
+      dplyr::filter(.data[["id"]] != "")
+    if(collect) df <- dplyr::collect(df)
     pool::poolReturn(con)
-    return(result)
-  }
-  data_delete <- \(context, value = NULL){
+    return(df)
+  }  
+  update_row <- \(value = NULL, context = NULL, id = NULL){
+    if (is.null(context)){
+      penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
     con <- pool::poolCheckout(context$pool)
-    sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
-    result <- DBI::dbExecute(con, sql)  
+    if(!is.null(value[["id"]])) id = value$id
+    value$id <- NULL
+    columns_to_update <- paste0(paste0(names(value), "=\"", value, "\""), collapse = ", ")    
+    sql <- glue::glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{id}\"")
+    invisible(DBI::dbExecute(con, sql))
     pool::poolReturn(con)
     invisible(NULL)
   }
-  data_auth <- \(context, value = NULL){
+  delete_row <- \(value = NULL, context = NULL, id = NULL){
+    if (is.null(context)){
+      penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
     con <- pool::poolCheckout(context$pool)
-    sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
-    result <- DBI::dbExecute(con, sql)  
+    if(!is.null(value)) {
+      sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
+    }
+    if(!is.null(id)) {
+      sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{id}\"")
+    }
+    invisible(DBI::dbExecute(con, sql))
     pool::poolReturn(con)
     invisible(NULL)
-  }
+    }
   r <- list(
     app = ambiorix::Ambiorix$new(host = host, port = port), 
     context = list(pool = pool, name = name, value = value),
     operations = list(
-      data_add = data_add,
-      data_read = data_read,
-      data_update = data_update,
-      data_delete = data_delete
+      add_row = add_row,
+      read_row = read_row,
+      read_rows = read_rows,
+      update_row = update_row,
+      delete_row = delete_row,
+      render_rows = render_rows,
+      render_row = render_row
     )
   )
-  if (nrow(auth) > 0){
-    r$operations$data_auth <- \(user = NULL, password = NULL) {
-      auth |> filter(.data["user"] == user, .data["password"] == password)
-    }
-  }  
   return(r)
+}
+
+#' Rendering only html tags
+#' @export
+render_tags <- \(taglist) {
+  html <- ""
+  tryCatch({
+        rendered <- renderTags(taglist)
+        html <- rendered$html
+    },
+    error = \(e) print(e)
+  )
 }
 
 #' @noRd
@@ -126,10 +172,18 @@ render_html <- \(html){
 
 #' Render a custom page with a custom title and main content
 #' @export
-render_page <- \(title, main) {    
+render_page <- \(page_title = NULL, main = NULL) {    
+  if (is.null(page_title)){
+    penv <- rlang::env_parent()
+    page_title <- penv[["page_title"]]
+  }
+  if (is.null(main)){
+    penv <- rlang::env_parent()
+    main <- penv[["main"]]
+  }
   html <- htmltools::tagList(
     tags$head(
-      tags$title(title),
+      tags$title(page_title),
       tags$style("body {background-color:white;}"),
       tags$link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css", rel = "stylesheet", integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH",  crossorigin="anonymous"),
       tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin="anonymous"),
@@ -157,3 +211,159 @@ render_plot <- \(p){
   tags$img(src = glue::glue("data:image/png;base64,{p_txt}"))
 }
 
+
+#' Render login forms
+#' @export
+process_login_get <- \(
+      req,
+      res,
+      ...,
+      page_title = "Login",
+      main = NULL,
+      id = "login_form",
+      login_url = "/login",
+      style = "margin: 20px",
+      cookie_errors = "errors"
+    ){
+  if (is_debug_enabled()) print("process_login_get")
+  errors <- ""    
+  cookie <- req$cookie[[cookie_errors]]
+  
+  if (is.character(cookie) && cookie != "" && length(cookie) > 0){
+    errors <- req$cookie[[cookie_errors]]    
+    res$cookie(name = cookie_errors, value = "")
+  }
+  if (is.null(main)) {
+    main <- htmltools::tagList(
+      tags$h1(page_title),
+      tags$div(htmltools::tagList(
+        tags$div(
+          tags$label(
+            "User",
+            tags$div(tags$input(type = "text", name = "user"))
+          )
+        ),
+        tags$div(
+          tags$label(
+            "Password",
+            tags$div(tags$input(type = "password", name = "password"))
+          )
+        ),
+        tags$div(id = "login_response", errors)
+      )),
+      tags$button(page_title)
+    )
+  }
+  html <- render_page(
+    page_title = page_title,
+    main = tags$form(action = login_url, method = "post", enctype = "multipart/form-data", id = id, style = style, main)
+  )
+  res$send(html)
+}
+
+#' Process login requests
+process_login_post <- \(
+      req,
+      res,
+      user_param = "user",
+      password_param = "password",
+      user = Sys.getenv("AMBHTMX_USER"),
+      password = Sys.getenv("AMBHTMX_PASSWORD"),
+      user_error = "Invalid user",
+      password_error = "Invalid password",
+      cookie_loggedin = "loggedin",
+      cookie_errrors = "errors",
+      login_url = "/login",
+      success_url = "/"
+    ) {
+  if (is_debug_enabled()) print("process_login_post")
+  params <- ambiorix::parse_multipart(req)  
+  errors <- c("")
+
+  if (!identical(params[[user_param]], Sys.getenv("AMBHTMX_USER")))
+    errors <- c(user_error, errors)
+
+  if (!identical(params[[password_param]], Sys.getenv("AMBHTMX_PASSWORD")))
+    errors <- c(password_error, errors)
+
+  if (length(errors)>1) {
+    error_message <- paste0(errors[1:length(errors)-1], ". ", collapse = "")
+    res$cookie(
+      name = cookie_errrors,
+      value = error_message
+    )    
+    return(res$redirect(login_url, status = 302L))
+  }  
+  res$cookie(
+      cookie_loggedin,
+      params[[user_param]]
+  )  
+  res$redirect(success_url, status = 302L)
+}
+
+#' Process logout requests
+process_logout_get <- \(
+      req,
+      res,  
+      cookie_loggedin = "loggedin",  
+      success_url = "/"
+    ) {
+  if (is_debug_enabled()) print("process_logout_get")
+  res$cookie(
+      name = cookie_loggedin,
+      ""
+  )
+  if (is_debug_enabled()) {
+    cat(glue::glue('\ncookie {cookie_loggedin} is set to ""\n\n'))
+  }
+  res$redirect(success_url, status = 302L)
+}
+
+#' Process loggedin middleware
+process_loggedin_middleware <- \(
+      req,
+      res,
+      user = Sys.getenv("AMBHTMX_USER"),
+      cookie_loggedin = "loggedin"
+    ) { 
+  if (is_debug_enabled()) print("process_loggedin_middleware")
+  req[[cookie_loggedin]] <- identical(req$cookie[[cookie_loggedin]], user)
+
+  if (is_debug_enabled()) {
+    cat(glue::glue("\nreq${cookie_loggedin} <- {req[[cookie_loggedin]]}\n\n"))
+  }
+}
+
+
+#' Process error requests
+process_error_post <- \(
+      req,
+      res,
+      errors = NULL,
+      cookie_errrors = "errors",
+      error_url = NULL
+    ) {  
+  if (is_debug_enabled()) print("process_error_post")
+  error_message <- paste0(errors, ". ", collapse = "")
+  res$cookie(
+    name = cookie_errrors,
+    value = error_message
+  )
+  res$header("HX-Redirect", error_url)
+  return(res$redirect(error_url, status = 302L))
+}
+
+process_error_get <- \(
+      req,
+      res,      
+      cookie_errors = "errors"
+    ){
+  if (is_debug_enabled()) print("process_error_get")
+  errors <- ""
+  cookie <- req$cookie[[cookie_errors]]
+  if (is.character(cookie) && cookie != "" && length(cookie) > 0){
+    errors <- req$cookie[[cookie_errors]]    
+    res$cookie(name = cookie_errors, value = "")  
+  }
+  return(errors)
+}

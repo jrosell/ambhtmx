@@ -4,11 +4,26 @@ Build a Full-stack R App with ambiorix and htmx.
 
 ## Installation
 
-You can install the development version of ambhtmx from [GitHub](https://github.com/) with:
+You can install all the requeriments to run the examples:
 
 ```
-# install.packages("remotes")
-remotes::install_github("jrosell/ambhtmx")
+if(!"rlang" %in% installed.packages()){
+  if(!interactive()) { stop("The package \"rlang\" is required.") }
+  cat("The package \"rlang\" is required.\n✖ Would you like to install it?\n\n1: Yes\n2: No\n\nSelection:")  
+  if (readLines(n = 1) == "1"){
+      install.packages("rlang")
+  }  
+}
+rlang::check_installed("remotes")
+rlang::check_installed("ambhtmx", action = \(pkg, ...) remotes::install_github("jrosell/ambhtmx"))
+rlang::check_installed("ambiorix", action = \(pkg, ... ) remotes::install_github("devOpifex/ambiorix"))
+rlang::check_installed("scilis", action = \(pkg, ... ) remotes::install_github("devOpifex/scilis"))
+rlang::check_installed("signaculum", action = \(pkg, ... ) remotes::install_github("devOpifex/signaculum"))
+rlang::check_installed("tidyverse")
+rlang::check_installed("zeallot")
+rlang::check_installed("glue")
+rlang::check_installed("htmltools")
+rlang::check_installed("this.path")
 ```
 
 ## Examples
@@ -30,3 +45,7 @@ remotes::install_github("jrosell/ambhtmx")
 
 ### [Single user and password autentication](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/06-basic-auth.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/06.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/06-basic-auth.R)
+
+
+### [Secure CRUD example with ambhtmx](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
+[![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/07.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)

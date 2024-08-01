@@ -9,9 +9,9 @@ ambhtmx_app(
   value = tibble::tibble(),
   host = "127.0.0.1",
   port = "8000",
-  live = FALSE,
-  renderer = NULL,
-  auth = tibble(user = NULL, password = NULL)
+  live = "",
+  render_rows = NULL,
+  render_row = NULL
 )
 }
 \description{
