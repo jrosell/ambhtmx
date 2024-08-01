@@ -1,4 +1,4 @@
-library(ambhtmx); 
+library(ambhtmx)
 library(ambiorix)
 library(scilis)
 library(tidyverse)

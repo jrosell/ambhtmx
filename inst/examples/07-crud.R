@@ -1,5 +1,4 @@
-devtools::load_all()
-# library(ambhtmx)
+library(ambhtmx)
 library(ambiorix)
 library(scilis)
 library(tidyverse)
@@ -8,7 +7,7 @@ library(glue)
 library(htmltools)
 library(signaculum)
 
-page_title <- "Secure CRUD example with ambhtmx (ambiorix + htmx)"
+page_title <- "Password protected CRUD (Create, Read, Update, and Delete) example with ambhtmx"
 
 live_path <- tryCatch(
   {this.path::this.path()},
