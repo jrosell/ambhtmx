@@ -80,9 +80,17 @@
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">check_installed</a></span><span class="op">(</span><span class="st">"glue"</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">check_installed</a></span><span class="op">(</span><span class="st">"htmltools"</span><span class="op">)</span></span>
 <span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">check_installed</a></span><span class="op">(</span><span class="st">"this.path"</span><span class="op">)</span></span></code></pre>
+<p>Furthermore, you may want to create a .Renviron file with the following variables:</p>
+<pre><code>AMBHTMX_USER=&lt;your user&gt;
+AMBHTMX_PASSWORD=&lt;your password&gt;
+AMBHTMX_SECRET=&lt;a secret key to make cookies safer&gt;
+GITHUB_PAT=&lt;an optional token to install github repos safely&gt;
+AMBHTMX_PROTOCOL=&lt;to change host default http&gt;
+AMBHTMX_HOST=&lt;to change host default 127.0.0.1&gt;
+AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="code-examples">Code examples<a class="anchor" aria-label="anchor" href="#code-examples"></a>
 </h2>
 <div class="section level3">
 <h3 id="incrementing-a-counter">
@@ -126,6 +134,13 @@
 </h3>
 <p><a href="https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R" class="external-link"><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/07.png"></a></p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="deployment-examples">Deployment examples<a class="anchor" aria-label="anchor" href="#deployment-examples"></a>
+</h2>
+<p>If you create a Dockerfile you can deploy your ambhtmx app to HuggingFace Spaces, Digital Ocean, Google Cloud, etc.</p>
+<p>I created the ambhtmx.crud repo for the CRUD example on <a href="https://github.com/jrosell/ambhtmx.crud" class="external-link">Github</a> and <a href="https://huggingface.co/spaces/jrosell/ambhtmx.crud" class="external-link">HuggingFace Spaces</a>.</p>
+<p><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png"></p>
 </div>
 </div>
   </div>

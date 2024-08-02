@@ -7,8 +7,9 @@
 ambhtmx_app(
   dbname = NULL,
   value = tibble::tibble(),
-  host = "127.0.0.1",
-  port = "8000",
+  protocol = NULL,
+  host = NULL,
+  port = NULL,
   live = "",
   favicon = NULL,
   render_index = NULL,
