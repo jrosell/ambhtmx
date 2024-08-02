@@ -3,8 +3,9 @@
 ambhtmx_app <- \(
       dbname = NULL, 
       value = tibble::tibble(), 
-      host = "127.0.0.1", 
-      port = "8000", 
+      protocol = NULL,
+      host = NULL, 
+      port = NULL, 
       live = "",      
       favicon = NULL,
       render_index = NULL,
@@ -13,6 +14,15 @@ ambhtmx_app <- \(
   pool <- NULL
   data <- NULL
   name <- NULL
+  if(is.null(Sys.getenv("AMBHTMX_HOST")) || 
+        is.null(Sys.getenv("AMBHTMX_PORT")) ||
+        is.null(Sys.getenv("AMBHTMX_PROTOCOL"))
+      ) {
+    print("Set AMBHTMX_PROTOCOL, AMBHTMX_HOST and AMBHTMX_PORT environment variables to configure the server. By default, http://127.0.0.1:8000 is set.")
+  }
+  protocol <- protocol %||% Sys.getenv("AMBHTMX_PROTOCOL") %||% "http"
+  port <- port %||% Sys.getenv("AMBHTMX_HOST") %||% "127.0.0.1"
+  host <- host %||% Sys.getenv("AMBHTMX_PORT") %||% "8000"
   if (live != "") {
     warning("live = TRUE is alpha")    
     cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
@@ -113,7 +123,7 @@ ambhtmx_app <- \(
   }
   app <- ambiorix::Ambiorix$new(host = host, port = port)
   if (length(Sys.getenv("AMBHTMX_USER")) < 2 || length(Sys.getenv("AMBHTMX_PASSWORD")) < 2) {
-    print("Set AMBHTMX_USER and AMBHTMX_PASSWORD environment variable configure authentication.")
+    print("Set AMBHTMX_USER and AMBHTMX_PASSWORD environment variables to configure authentication.")
   }
   if(requireNamespace("scilis") && length(Sys.getenv("AMBHTMX_SECRET")) >= 2) {
     app <- app$use(scilis::scilis(Sys.getenv("AMBHTMX_SECRET")))
@@ -134,7 +144,7 @@ ambhtmx_app <- \(
     )
   )
   return(r)
-}
+  }
 
 #' Rendering only html tags
 #' @export
@@ -351,11 +361,26 @@ process_loggedin_middleware <- \(
       cookie_loggedin = "loggedin"
     ) { 
   if (is_debug_enabled()) print("process_loggedin_middleware")
-  req[[cookie_loggedin]] <- identical(req$cookie[[cookie_loggedin]], user)
+  req$loggedin <- identical(req$cookie[[cookie_loggedin]], user)
 
   if (is_debug_enabled()) {    
     cat(glue::glue("\req$cookie[[cookie_loggedin]] is {req$cookie[[cookie_loggedin]]}\n\n"))
-    cat(glue::glue("\nreq${cookie_loggedin} <- {req[[cookie_loggedin]]}\n\n"))
+    cat(glue::glue("\nreq$loggedin <- {req$loggedin]}\n\n"))
+  }
+}
+
+#' Process loggedin redirect
+#' @export
+process_loggedin_redirect <- \(
+      req,
+      res,
+      user = Sys.getenv("AMBHTMX_USER"),      
+      login_url = "/login"
+    ) { 
+  full_login_url <- glue::glue("{req$HTTP_HOST}{login_url}") |> 
+    stringr::str_replace()
+  if (!identical(req$loggedin, user)) {
+    return(res$redirect(full_login_url, status = 302L))
   }
 }
 

@@ -26,7 +26,19 @@ rlang::check_installed("htmltools")
 rlang::check_installed("this.path")
 ```
 
-## Examples
+Furthermore, you may want to create a .Renviron file with the following variables:
+
+```
+AMBHTMX_USER=<your user>
+AMBHTMX_PASSWORD=<your password>
+AMBHTMX_SECRET=<a secret key to make cookies safer>
+GITHUB_PAT=<an optional token to install github repos safely>
+AMBHTMX_PROTOCOL=<to change host default http>
+AMBHTMX_HOST=<to change host default 127.0.0.1>
+AMBHTMX_PORT=<to change port default 3000>
+````
+
+## Code examples
 
 ### [Incrementing a counter](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/01-counter.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/01.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/01-counter.R)
@@ -49,3 +61,13 @@ rlang::check_installed("this.path")
 
 ### [Password protected CRUD (Create, Read, Update, and Delete) example with ambhtmx](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/07.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
+
+
+## Deployment examples
+
+If you create a Dockerfile you can deploy your ambhtmx app to HuggingFace Spaces, Digital Ocean, Google Cloud, etc.
+
+I created the ambhtmx.crud repo for the CRUD example on [Github](https://github.com/jrosell/ambhtmx.crud) and [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.crud).
+
+![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png)
+
