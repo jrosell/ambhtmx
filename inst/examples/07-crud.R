@@ -1,6 +1,6 @@
 library(ambhtmx)
+# devtools::load_all()
 library(ambiorix)
-library(scilis)
 library(tidyverse)
 library(zeallot)
 library(glue)
@@ -14,23 +14,50 @@ live_path <- tryCatch(
   error = function(e) return("")
 )
 
-render_items <- \(items) {
-  items |>    
-    rowwise() |>
-    group_split() |> 
-    map(\(item) {
-      tags$li(        
-        tags$a(
-          item$name,
-          href = glue("/{item$id}"),
-          `hx-get`= glue("/{item$id}"),
-          `hx-target` = "#main",
-          `hx-swap` = "innerHTML"
-        )
-      )
-    })
+render_index <- \() {
+  main <- NULL
+  tryCatch({
+      index <- p("Add your first item.")
+      item_rows <- items$read_rows()
+      if(nrow(item_rows) > 0) {
+        index <- item_rows |>    
+          rowwise() |>
+          group_split() |> 
+          map(\(item) {
+            tags$li(        
+              tags$a(
+                item$name,
+                href = glue("/items/{item$id}"),
+                `hx-get`= glue("/items/{item$id}"),
+                `hx-target` = "#main",
+                `hx-swap` = "innerHTML"
+              )
+            )
+          })
+      }
+      main <- withTags(div(id = "page", style = "margin: 50px",
+          div(style ="float:right", id = "logout", button("Logout", onclick = "void(location.href='/logout')")),
+          h1(page_title),
+          div(id = "main", style = "margin-top: 20px", tagList(
+                h2("Index of items"),
+                index,
+                button(
+                  "New item",
+                  style = "margin-top:20px",
+                  `hx-get` = "/items/new",
+                  `hx-target` = "#main",
+                  `hx-swap` = "innerHTML"
+                )
+          ))
+      ))
+    },
+    error = \(e) print(e)
+  )
+  return(main)
 }
-render_item <- \(item) {
+
+
+render_row <- \(item) {
   tags$div(    
     tags$strong(item$name),
     tags$br(),
@@ -49,12 +76,11 @@ c(app, context, items) %<-%
       content = character(1)
     ),
     live = live_path,
-    render_rows = render_items,
-    render_row = render_item
+    render_index = render_index,
+    render_row = render_row
   )
 
 #' Authentication feature with secret cookies and .Renviron variables
-app$use(scilis(Sys.getenv("AMBHTMX_SECRET")))
 app$get("/login", \(req, res) {
   process_login_get(req, res)
 })
@@ -111,44 +137,38 @@ tibble(id = "1", name = "Quines postres", content = "Tant bones.") |>
   items$add_row()
 items$read_rows() |> print()
 
-#' Read the index of the items
+
+#' The main page
 app$get("/", \(req, res){  
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
-  index <- p("Add your first item.")
-  item_rows <- items$read_rows()
-  if(nrow(item_rows) > 0) index <- items$render_rows(item_rows)
-  html <- render_page(
-      page_title = page_title,
-      main = withTags(div(id = "page", style = "margin: 50px",
-            div(style ="float:right", id = "logout", button("Logout", onclick = "void(location.href='/logout')")),
-            h1(page_title),
-            div(id = "main", style = "margin-top: 20px", tagList(
-                  h2("Index of items"),
-                  index,
-                  button(
-                    "New item",
-                    style = "margin-top:20px",
-                    `hx-get` = "/new",
-                    `hx-target` = "#main",
-                    `hx-swap` = "innerHTML"
-                  )
-            ))
-      ))
+  html <- ""  
+  tryCatch({
+      html <- render_page(
+          page_title = page_title,
+          main = items$render_index()
+      )
+    },
+    error = \(e) print(e)
   )
   res$send(html)
 })
 
+#' Read the index of the items
+app$get("/items", \(req, res){  
+  if (!req$loggedin) {    
+    return(res$redirect("/login", status = 302L))
+  }
+  res$send(items$render_index())
+})
 
 #' New item form
-app$get("/new", \(req, res){
+app$get("/items/new", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
   errors <- process_error_get(req, res)
-  print("errors")
-  print(errors)
   html <- render_tags(withTags(tagList(
       h2("New item"),
       div(label("Name", p(input(name = "name")))),
@@ -158,7 +178,7 @@ app$get("/new", \(req, res){
         href = "/",
         style = "margin-right:20px",
         `hx-confirm` = "Are you sure you want to go back?",
-        `hx-get` = "/",
+        `hx-get` = "/items",
         `hx-target` = "#page",
         `hx-swap` = "outerHTML",
         `hx-encoding` = "multipart/form-data"
@@ -166,9 +186,9 @@ app$get("/new", \(req, res){
       button(
         "Create",
         style = "margin-top:20px",
-        `hx-post` = "/",
-        `hx-target` = "#main",
-        `hx-swap` = "innerHTML",
+        `hx-post` = "/items",
+        `hx-target` = "#page",
+        `hx-swap` = "outerHTML",
         `hx-include` = "[name='name'], [name='content']",
       ),
       errors
@@ -178,7 +198,7 @@ app$get("/new", \(req, res){
 
 
 #' Show an existing item
-app$get("/:id", \(req, res){
+app$get("/items/:id", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
@@ -191,7 +211,7 @@ app$get("/:id", \(req, res){
       "Go back",
       href = "/",
       style = "margin-right:20px",
-      `hx-get` = "/",
+      `hx-get` = "/items",
       `hx-target` = "#page",
       `hx-swap` = "outerHTML",
     ),
@@ -200,15 +220,15 @@ app$get("/:id", \(req, res){
       href = "/",
       style = "color: red; margin-right:20px",
       `hx-confirm` = "Are you sure you want to delete the item?",
-      `hx-delete` = glue("/{item$id}"),
-      `hx-target` = "#main",
-      `hx-swap` = "innerHTML",
+      `hx-delete` = glue("/items/{item$id}"),
+      `hx-target` = "#page",
+      `hx-swap` = "outerHTML",
       `hx-encoding` = "multipart/form-data"
     ),
     button(
       "Edit",
       style = "margin-top:20px",
-      `hx-get` = glue("/{item_id}/edit"),
+      `hx-get` = glue("/items/{item_id}/edit"),
       `hx-target` = "#main",
       `hx-swap` = "innerHTML"
     )
@@ -217,7 +237,7 @@ app$get("/:id", \(req, res){
 })
 
 #' Edit item form
-app$get("/:id/edit", \(req, res){
+app$get("/items/:id/edit", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
@@ -233,7 +253,7 @@ app$get("/:id/edit", \(req, res){
       href = "/",
       style = "margin-right:20px",
       `hx-confirm` = "Are you sure you want to go back?",
-      `hx-get` = "/",
+      `hx-get` = "/items",
       `hx-target` = "#page",
       `hx-swap` = "outerHTML",
       `hx-encoding` = "multipart/form-data"
@@ -241,9 +261,9 @@ app$get("/:id/edit", \(req, res){
     button(
       "Update",
       style = "margin-top:20px",
-      `hx-put` = glue("/{item$id}"),
-      `hx-target` = "#main",
-      `hx-swap` = "innerHTML",
+      `hx-put` = glue("/items/{item$id}"),
+      `hx-target` = "#page",
+      `hx-swap` = "outerHTML",
       `hx-include` = "[name='name'], [name='content']",
     )
   )))
@@ -251,7 +271,7 @@ app$get("/:id/edit", \(req, res){
 })
 
 #' Create a new item
-app$post("/", \(req, res){
+app$post("/items", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
@@ -261,7 +281,7 @@ app$post("/", \(req, res){
       req,
       res,
       errors = "Name is required",
-      error_url = "/new"
+      error_url = "/items/new"
     ))
   }
   if (is.null(params[["content"]])) {
@@ -273,13 +293,12 @@ app$post("/", \(req, res){
         items$add_row()
     }, 
     error = \(e) print(e)
-  )
-  res$header("HX-redirect", "/")
-  res$send("")
+  )    
+  res$send(items$render_index())
 })
 
 #' Update an existing item
-app$put("/:id", \(req, res){
+app$put("/items/:id", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
@@ -295,19 +314,17 @@ app$put("/:id", \(req, res){
     }, 
     error = \(e) print(e)
   )
-  res$header("HX-redirect", "/")
-  res$send("")
+  res$send(items$render_index())
 })
 
 #' Delete an existing item
-app$delete("/:id", \(req, res){
+app$delete("/items/:id", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
   item_id <- req$params$id %||% ""  
   items$delete_row(id = item_id)
-  res$header("HX-redirect", "/")
-  res$send("")
+  res$send(items$render_index())
 })
 
 #' Start the app with all the previous defined routes

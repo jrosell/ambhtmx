@@ -1,11 +1,10 @@
 library(ambhtmx)
+# devtools::load_all()
 library(ambiorix)
-library(scilis)
 library(tidyverse)
 library(zeallot)
 library(glue)
 library(htmltools)
-devtools::load_all()
 
 page_title <- "ambhtmx basic authentication example"
 
@@ -21,7 +20,6 @@ c(app, context, operations) %<-% ambhtmx_app(
 
 
 #' Authentication feature with secret cookies and .Renviron variables
-app$use(scilis(Sys.getenv("AMBHTMX_SECRET")))
 app$get("/login", \(req, res) {
   process_login_get(req, res)
 })

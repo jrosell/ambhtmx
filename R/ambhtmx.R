@@ -9,8 +9,9 @@ ambhtmx_app <- \(
       host = "127.0.0.1", 
       port = "8000", 
       live = "",
-      render_rows = NULL,
-      render_row = NULL
+      render_index = NULL,
+      render_row = NULL,
+      favicon = NULL
     ) {
   pool <- NULL
   data <- NULL
@@ -18,6 +19,9 @@ ambhtmx_app <- \(
   if (live != "") {
     warning("live = TRUE is alpha")    
     cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
+  }
+  if(is.null(favicon)) {
+    favicon <- system.file("favicon.ico", package = "signaculum")
   }
   if (nrow(value) == 1) {
     create_table <- !is.null(dbname) && !file.exists(dbname)
@@ -110,8 +114,12 @@ ambhtmx_app <- \(
     pool::poolReturn(con)
     invisible(NULL)
     }
+  app <- ambiorix::Ambiorix$
+    new(host = host, port = port)$
+    use(scilis::scilis(Sys.getenv("AMBHTMX_SECRET")))$
+    get("/favicon.ico", signaculum::signaculum(favicon))
   r <- list(
-    app = ambiorix::Ambiorix$new(host = host, port = port), 
+    app = app, 
     context = list(pool = pool, name = name, value = value),
     operations = list(
       add_row = add_row,
@@ -119,7 +127,7 @@ ambhtmx_app <- \(
       read_rows = read_rows,
       update_row = update_row,
       delete_row = delete_row,
-      render_rows = render_rows,
+      render_index = render_index,
       render_row = render_row
     )
   )
@@ -229,6 +237,10 @@ process_login_get <- \(
   errors <- ""    
   cookie <- req$cookie[[cookie_errors]]
   
+  if (is_debug_enabled()) {
+    cat(glue::glue("\ncookie_errors {cookie_errors} is {req$cookie[[cookie_errors]]}\n\n"))
+  }
+
   if (is.character(cookie) && cookie != "" && length(cookie) > 0){
     errors <- req$cookie[[cookie_errors]]    
     res$cookie(name = cookie_errors, value = "")
@@ -293,11 +305,18 @@ process_login_post <- \(
       value = error_message
     )    
     return(res$redirect(login_url, status = 302L))
-  }  
+  }
+
+  if (is_debug_enabled()) {
+    cat(glue::glue("\ncookie_loggedin {cookie_loggedin} and user {params[[user_param]]}\n\n"))
+  }
   res$cookie(
       cookie_loggedin,
       params[[user_param]]
-  )  
+  )
+  if (is_debug_enabled()) {
+    cat(glue::glue("\n{cookie_loggedin} = {params[[user_param]]}\n\n"))
+  }
   res$redirect(success_url, status = 302L)
 }
 
@@ -329,7 +348,8 @@ process_loggedin_middleware <- \(
   if (is_debug_enabled()) print("process_loggedin_middleware")
   req[[cookie_loggedin]] <- identical(req$cookie[[cookie_loggedin]], user)
 
-  if (is_debug_enabled()) {
+  if (is_debug_enabled()) {    
+    cat(glue::glue("\req$cookie[[cookie_loggedin]] is {req$cookie[[cookie_loggedin]]}\n\n"))
     cat(glue::glue("\nreq${cookie_loggedin} <- {req[[cookie_loggedin]]}\n\n"))
   }
 }
