@@ -2,7 +2,7 @@
 % Please edit documentation in R/ambhtmx.R
 \name{process_error_post}
 \alias{process_error_post}
-\title{Process error requests}
+\title{Process error post requests}
 \usage{
 process_error_post(
   req,
@@ -13,5 +13,5 @@ process_error_post(
 )
 }
 \description{
-Process error requests
+Process error post requests
 }

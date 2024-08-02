@@ -274,6 +274,7 @@ process_login_get <- \(
 }
 
 #' Process login requests
+#' @export
 process_login_post <- \(
       req,
       res,
@@ -321,6 +322,7 @@ process_login_post <- \(
 }
 
 #' Process logout requests
+#' @export
 process_logout_get <- \(
       req,
       res,  
@@ -339,6 +341,7 @@ process_logout_get <- \(
 }
 
 #' Process loggedin middleware
+#' @export
 process_loggedin_middleware <- \(
       req,
       res,
@@ -355,7 +358,8 @@ process_loggedin_middleware <- \(
 }
 
 
-#' Process error requests
+#' Process error post requests
+#' @export
 process_error_post <- \(
       req,
       res,
@@ -373,6 +377,8 @@ process_error_post <- \(
   return(res$redirect(error_url, status = 302L))
 }
 
+#' Process error get requests
+#' @export
 process_error_get <- \(
       req,
       res,      
