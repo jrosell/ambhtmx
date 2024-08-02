@@ -12,7 +12,7 @@ is_debug_enabled <- \() TRUE
 #' @keywords internal
 #' @noRd
 rebuild_docs_and_check <- function() {
-  previous_version <- "0.0.0.9000"
+  previous_version <- "0.0.0.9002"
   usethis::use_description(list(
       "Title" = "ambhtmx",
       "Description" = "Build a Full-stack R App with ambiorix and htmx.",
@@ -70,5 +70,5 @@ rebuild_docs_and_check <- function() {
   devtools::document()
   pkgdown::build_site()
   devtools::check()
-  usethis::use_version(which = "dev", push = FALSE)
+  # usethis::use_version(which = "dev", push = FALSE)
 }
