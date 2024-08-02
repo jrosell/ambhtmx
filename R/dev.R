@@ -10,6 +10,7 @@ is_debug_enabled <- \() TRUE
 #' }
 #' 
 #' @keywords internal
+#' @noRd
 rebuild_docs_and_check <- function() {
   previous_version <- "0.0.0.9000"
   usethis::use_description(list(

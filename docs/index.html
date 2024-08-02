@@ -142,6 +142,16 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 <p>I created the ambhtmx.crud repo for the CRUD example on <a href="https://github.com/jrosell/ambhtmx.crud" class="external-link">Github</a> and <a href="https://huggingface.co/spaces/jrosell/ambhtmx.crud" class="external-link">HuggingFace Spaces</a>.</p>
 <p><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png"></p>
 </div>
+<div class="section level2">
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
+</h2>
+<p>Kown issues:</p>
+<ul>
+<li>Authentication is not working. Are you trying to autenticate from 0.0.0.0 host? Cookies don’t work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).</li>
+<li>HuggingFace Spaces and Docker are not working. Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.</li>
+</ul>
+<p>Another issue? Please, <a href="https://github.com/jrosell/ambhtmx/issues" class="external-link">let me know</a>.</p>
+</div>
 </div>
   </div>
 
