@@ -18,7 +18,6 @@ c(app, context, operations) %<-% ambhtmx_app(
   live = live_path
 )
 
-
 #' Authentication feature with secret cookies and .Renviron variables
 app$get("/login", \(req, res) {
   process_login_get(req, res)
@@ -87,3 +86,4 @@ app$post("/increment", \(req, res){
 
 #' Start the app with all the previous defined routes
 app$start(open = FALSE)
+

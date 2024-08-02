@@ -21,8 +21,8 @@ ambhtmx_app <- \(
     print("Set AMBHTMX_PROTOCOL, AMBHTMX_HOST and AMBHTMX_PORT environment variables to configure the server. By default, http://127.0.0.1:8000 is set.")
   }
   protocol <- protocol %||% Sys.getenv("AMBHTMX_PROTOCOL") %||% "http"
-  port <- port %||% Sys.getenv("AMBHTMX_HOST") %||% "127.0.0.1"
-  host <- host %||% Sys.getenv("AMBHTMX_PORT") %||% "8000"
+  port <- port %||% Sys.getenv("AMBHTMX_PORT") %||% "8000"
+  host <- host %||% Sys.getenv("AMBHTMX_HOST") %||% "127.0.0.1"
   if (live != "") {
     warning("live = TRUE is alpha")    
     cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
