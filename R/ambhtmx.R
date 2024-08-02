@@ -130,15 +130,27 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
-    con <- pool::poolCheckout(context$pool)
-    if(!is.null(value)) {
+    tryCatch({
+        con <- pool::poolCheckout(context$pool)
+      },
+      error = \(e) print(e)
+    )    
+    if(!is.null(value) && !is.null(value$id)) {
       sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
     }
     if(!is.null(id)) {
       sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{id}\"")
     }
-    invisible(DBI::dbExecute(con, sql))
-    pool::poolReturn(con)
+    tryCatch({
+        invisible(DBI::dbExecute(con, sql))
+      },
+      error = \(e) print(e)
+    )
+    tryCatch({
+        pool::poolReturn(con)
+      },
+      error = \(e) print(e)
+    )    
     invisible(NULL)
   }
   app <- ambiorix::Ambiorix$new(host = host, port = port)
