@@ -26,13 +26,13 @@ rebuild_docs_and_check <- function() {
       "pak",
       "pkgdown",
       "devtools",
-      "usethis",
-      "processx"
+      "usethis"
   )
   suggests_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Suggests"); x} 
   )
   imports_packages <- c(
+      "ambiorix",
       "rlang",
       "purrr",
       "b64",
@@ -51,13 +51,12 @@ rebuild_docs_and_check <- function() {
   imports_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Imports"); x}
   )
-  dev_packages <- c(
-    "ambiorix",
-    "scilis"
-  )
-  dev_packages |> purrr::map(
-    \(x){usethis::use_dev_package(x, type = "Imports"); x}
-  )
+  # dev_packages <- c(
+  #   "scilis"
+  # )
+  # dev_packages |> purrr::map(
+  #   \(x){usethis::use_dev_package(x, type = "Imports"); x}
+  # )
     
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
