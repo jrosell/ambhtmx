@@ -382,6 +382,7 @@ process_loggedin_redirect <- \(
   if (!identical(req$loggedin, user)) {
     return(res$redirect(full_login_url, status = 302L))
   }
+  return(NULL)
 }
 
 
