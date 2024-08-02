@@ -13,6 +13,7 @@ live_path <- tryCatch(
   {this.path::this.path()},
   error = function(e) return("")
 )
+print(live_path)
 
 render_index <- \() {
   main <- NULL

@@ -1,3 +1,7 @@
+#' Flag to help development
+#' @keywords internal
+#' @noRd
+is_debug_enabled <- \() TRUE
 
 #' Internal helper function for package development
 #' @examples
@@ -36,6 +40,7 @@ rebuild_docs_and_check <- function() {
       "rlang",
       "purrr",
       "b64",
+      "uwu",
       "tibble",
       "htmltools",
       "glue",
@@ -45,17 +50,17 @@ rebuild_docs_and_check <- function() {
       "stringr",
       "DBI",
       "RSQLite",
-      "pool"
+      "pool"      
   )
   imports_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Imports"); x}
   )
-  dev_packages <- c(
-    "uwu"
-  )
-  dev_packages |> purrr::map(
-    \(x){usethis::use_dev_package(x, type = "Imports"); x}
-  )
+  # dev_packages <- c(
+  #   "uwu"
+  # )
+  # dev_packages |> purrr::map(
+  #   \(x){usethis::use_dev_package(x, type = "Imports"); x}
+  # )
     
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")

@@ -10,9 +10,9 @@ ambhtmx_app(
   host = "127.0.0.1",
   port = "8000",
   live = "",
+  favicon = NULL,
   render_index = NULL,
-  render_row = NULL,
-  favicon = NULL
+  render_row = NULL
 )
 }
 \description{

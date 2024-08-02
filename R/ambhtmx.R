@@ -1,6 +1,3 @@
-#' @noRd
-is_debug_enabled <- \() TRUE
-
 #' Creating an ambiorix + htmx app
 #' @export
 ambhtmx_app <- \(
@@ -8,10 +5,10 @@ ambhtmx_app <- \(
       value = tibble::tibble(), 
       host = "127.0.0.1", 
       port = "8000", 
-      live = "",
+      live = "",      
+      favicon = NULL,
       render_index = NULL,
-      render_row = NULL,
-      favicon = NULL
+      render_row = NULL
     ) {
   pool <- NULL
   data <- NULL
@@ -113,13 +110,18 @@ ambhtmx_app <- \(
     invisible(DBI::dbExecute(con, sql))
     pool::poolReturn(con)
     invisible(NULL)
-    }
-  app <- ambiorix::Ambiorix$
-    new(host = host, port = port)$
-    use(scilis::scilis(Sys.getenv("AMBHTMX_SECRET")))$
-    get("/favicon.ico", signaculum::signaculum(favicon))
+  }
+  app <- ambiorix::Ambiorix$new(host = host, port = port)
+  if (length(Sys.getenv("AMBHTMX_USER")) < 2 || length(Sys.getenv("AMBHTMX_PASSWORD")) < 2) {
+    print("Set AMBHTMX_USER and AMBHTMX_PASSWORD environment variable configure authentication.")
+  }
+  if(requireNamespace("scilis") && length(Sys.getenv("AMBHTMX_SECRET")) >= 2) {
+    app <- app$use(scilis::scilis(Sys.getenv("AMBHTMX_SECRET")))
+  } else {
+    print("Install scilis package and set AMBHTMX_SECRET environment variable to keep cookies safe.")
+  }
   r <- list(
-    app = app, 
+    app = app$get("/favicon.ico", signaculum::signaculum(favicon)),
     context = list(pool = pool, name = name, value = value),
     operations = list(
       add_row = add_row,
@@ -241,7 +243,7 @@ process_login_get <- \(
     cat(glue::glue("\ncookie_errors {cookie_errors} is {req$cookie[[cookie_errors]]}\n\n"))
   }
 
-  if (is.character(cookie) && cookie != "" && length(cookie) > 0){
+  if (is.character(cookie) && cookie != "" && length(cookie) > 0 && !stringr::str_detect(cookie, "devOpifex/scilis")) {
     errors <- req$cookie[[cookie_errors]]    
     res$cookie(name = cookie_errors, value = "")
   }
