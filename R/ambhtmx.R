@@ -10,7 +10,7 @@ ambhtmx_app <- \(
       favicon = NULL,
       render_index = NULL,
       render_row = NULL
-    ) {
+    ){
   pool <- NULL
   data <- NULL
   name <- NULL
@@ -59,6 +59,10 @@ ambhtmx_app <- \(
       penv <- rlang::env_parent()
       context <- penv[["context"]]
     }
+    if (is.null(context)){
+      penv <- rlang::globalenv()
+      context <- penv[["context"]]
+    }
     if (is.null(value)) stop("Value is required")
     con <- pool::poolCheckout(context$pool)     
     if (is.null(value$id)) value$id <- uwu::new_v4(1)
@@ -69,6 +73,10 @@ ambhtmx_app <- \(
   read_row <- \(value = NULL,context = NULL, id = NULL){
     if (is.null(context)){
       penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
+    if (is.null(context)){
+      penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
     if(is.null(id)) id = value$id
@@ -84,6 +92,10 @@ ambhtmx_app <- \(
       penv <- rlang::env_parent()
       context <- penv[["context"]]
     }
+    if (is.null(context)){
+      penv <- rlang::globalenv()
+      context <- penv[["context"]]
+    }
     con <- pool::poolCheckout(context$pool)
     df <- dplyr::tbl(con, context$name) |>
       dplyr::filter(.data[["id"]] != "")
@@ -94,6 +106,10 @@ ambhtmx_app <- \(
   update_row <- \(value = NULL, context = NULL, id = NULL){
     if (is.null(context)){
       penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
+    if (is.null(context)){
+      penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
     con <- pool::poolCheckout(context$pool)
@@ -108,6 +124,10 @@ ambhtmx_app <- \(
   delete_row <- \(value = NULL, context = NULL, id = NULL){
     if (is.null(context)){
       penv <- rlang::env_parent()
+      context <- penv[["context"]]
+    }
+    if (is.null(context)){
+      penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
     con <- pool::poolCheckout(context$pool)
