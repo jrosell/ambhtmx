@@ -365,7 +365,7 @@ process_loggedin_middleware <- \(
 
   if (is_debug_enabled()) {    
     cat(glue::glue("\req$cookie[[cookie_loggedin]] is {req$cookie[[cookie_loggedin]]}\n\n"))
-    cat(glue::glue("\nreq$loggedin <- {req$loggedin]}\n\n"))
+    cat(glue::glue("\nreq$loggedin <- {req$loggedin}\n\n"))
   }
 }
 
