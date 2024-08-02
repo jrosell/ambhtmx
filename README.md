@@ -74,7 +74,7 @@ I created the ambhtmx.crud repo for the CRUD example on [Github](https://github.
 
 ## Troubleshooting
 
-Kown issues:
+Known issues:
 
 * Authentication is not working. Are you trying to autenticate from 0.0.0.0 host? Cookies don't work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).
 * HuggingFace Spaces and Docker are not working. Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.
