@@ -19,7 +19,7 @@ Suggests:
     usethis,
     uwu
 Imports: 
-    ambiorix,
+    ambiorix (>= 2.1.0),
     b64,
     DBI,
     dplyr,
@@ -33,3 +33,5 @@ Imports:
     stringr,
     tibble,
     zeallot
+Remotes: 
+    devOpifex/ambiorix
