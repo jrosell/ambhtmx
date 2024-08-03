@@ -55,6 +55,10 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+
+<!-- badges: end -->
+<p><strong>THIS IS A WORK IN PROGRESS, DO NOT USE</strong></p>
 <div class="section level1">
 <div class="page-header"><h1 id="ambhtmx">ambhtmx<a class="anchor" aria-label="anchor" href="#ambhtmx"></a>
 </h1></div>
@@ -136,7 +140,7 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 </div>
 </div>
 <div class="section level2">
-<h2 id="deployment-examples">Deployment examples<a class="anchor" aria-label="anchor" href="#deployment-examples"></a>
+<h2 id="deployment-examples-wip">Deployment examples (WIP)<a class="anchor" aria-label="anchor" href="#deployment-examples-wip"></a>
 </h2>
 <p>If you create a Dockerfile you can deploy your ambhtmx app to HuggingFace Spaces, Digital Ocean, Google Cloud, etc.</p>
 <p>I created the ambhtmx.crud repo for the CRUD example on <a href="https://github.com/jrosell/ambhtmx.crud" class="external-link">Github</a> and <a href="https://huggingface.co/spaces/jrosell/ambhtmx.crud" class="external-link">HuggingFace Spaces</a>.</p>
@@ -147,12 +151,14 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 </h2>
 <p>Known issues:</p>
 <ul>
-<li>Authentication is not working. Are you trying to autenticate from 0.0.0.0 host? Cookies don’t work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).</li>
-<li>HuggingFace Spaces and Docker are not working. Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.</li>
+<li>Are you trying to autenticate from 0.0.0.0 host? Cookies don’t work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).</li>
+<li>Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.</li>
+<li>HuggingFace Spaces example is WIP and it’s still not working.</li>
 </ul>
 <p>Another issue? Please, <a href="https://github.com/jrosell/ambhtmx/issues" class="external-link">let me know</a>.</p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -179,7 +185,12 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+</ul>
+</div>
 
   </div>
 </div>

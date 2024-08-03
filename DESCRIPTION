@@ -14,16 +14,19 @@ Depends:
     R (>= 4.4)
 Suggests: 
     devtools,
+    ggplot2,
     pak,
     pkgdown,
+    scilis (>= 0.0.0.9000),
+    signaculum (>= 0.0.0.9000),
     usethis,
-    uwu
+    uwu (>= 0.0.0.9000),
+    zeallot
 Imports: 
     ambiorix (>= 2.1.0),
     b64,
     DBI,
     dplyr,
-    ggplot2,
     glue,
     htmltools,
     pool,
@@ -31,7 +34,9 @@ Imports:
     rlang,
     RSQLite,
     stringr,
-    tibble,
-    zeallot
+    tibble
 Remotes:  
-    devOpifex/ambiorix
+    devOpifex/ambiorix,
+    devOpifex/scilis,
+    devOpifex/signaculum,
+    r-universe::josiahparry/uwu

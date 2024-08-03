@@ -32,6 +32,8 @@ rebuild_docs_and_check <- function() {
       "pkgdown",
       "devtools",
       "usethis",
+      "zeallot",
+      "ggplot2",
       "uwu"
   )
   suggests_packages |> purrr::map(
@@ -44,24 +46,30 @@ rebuild_docs_and_check <- function() {
       "tibble",
       "htmltools",
       "glue",
-      "zeallot",
-      "dplyr",
-      "ggplot2",
+      "dplyr",      
       "stringr",
       "DBI",
       "RSQLite",
-      "pool"      
+      "pool"
   )
   imports_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Imports"); x}
   )
-  dev_packages <- c(
+  imports_dev_packages <- c(
     "ambiorix"
   )
-  dev_packages |> purrr::map(
+  imports_dev_packages |> purrr::map(
     \(x){usethis::use_dev_package(x, type = "Imports"); x}
   )
-    
+  suggests_dev_packages <- c(
+    "scilis",
+    "signaculum"
+  )
+  suggests_dev_packages |> purrr::map(
+    \(x){usethis::use_dev_package(x, type = "Suggests"); x}
+  )
+  usethis::use_dev_package("uwu", remote = "r-universe::josiahparry/uwu", type = "Suggests")
+
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
   # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)

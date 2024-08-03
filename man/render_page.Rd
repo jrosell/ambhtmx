@@ -4,7 +4,7 @@
 \alias{render_page}
 \title{Render a custom page with a custom title and main content}
 \usage{
-render_page(page_title = NULL, main = NULL)
+render_page(main = NULL, page_title = NULL)
 }
 \description{
 Render a custom page with a custom title and main content

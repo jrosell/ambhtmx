@@ -26,10 +26,7 @@ ambhtmx_app <- \(
   if (live != "") {
     warning("live = TRUE is alpha")    
     cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
-  }
-  if(is.null(favicon)) {
-    favicon <- system.file("favicon.ico", package = "signaculum")
-  }
+  }  
   if (nrow(value) == 1) {
     create_table <- !is.null(dbname) && !file.exists(dbname)
     pool <- pool::dbPool(
@@ -60,7 +57,7 @@ ambhtmx_app <- \(
       context <- penv[["context"]]
     }
     if (is.null(context)){
-      penv <- rlang::globalenv()
+      penv <- rlang::global_env()
       context <- penv[["context"]]
     }
     if (is.null(context)){
@@ -83,7 +80,7 @@ ambhtmx_app <- \(
       context <- penv[["context"]]
     }
     if (is.null(context)){
-      penv <- rlang::globalenv()
+      penv <- rlang::global_env()
       context <- penv[["context"]]
     }
     if (is.null(context)){
@@ -106,7 +103,7 @@ ambhtmx_app <- \(
       context <- penv[["context"]]
     }
     if (is.null(context)){
-      penv <- rlang::globalenv()
+      penv <- rlang::global_env()
       context <- penv[["context"]]
     }
     if (is.null(context)){
@@ -129,7 +126,7 @@ ambhtmx_app <- \(
       context <- penv[["context"]]
     }
     if (is.null(context)){
-      penv <- rlang::globalenv()
+      penv <- rlang::global_env()
       context <- penv[["context"]]
     }
     if (is.null(context)){
@@ -154,7 +151,7 @@ ambhtmx_app <- \(
       context <- penv[["context"]]
     }
     if (is.null(context)){
-      penv <- rlang::globalenv()
+      penv <- rlang::global_env()
       context <- penv[["context"]]
     }
     if (is.null(context)){
@@ -184,16 +181,25 @@ ambhtmx_app <- \(
     invisible(NULL)
   }
   app <- ambiorix::Ambiorix$new(host = host, port = port)
-  if (length(Sys.getenv("AMBHTMX_USER")) < 2 || length(Sys.getenv("AMBHTMX_PASSWORD")) < 2) {
-    print("Set AMBHTMX_USER and AMBHTMX_PASSWORD environment variables to configure authentication.")
+  if (nchar(Sys.getenv("AMBHTMX_USER")) < 2 || nchar(Sys.getenv("AMBHTMX_PASSWORD")) < 2) {
+    cat("\nSet AMBHTMX_USER and AMBHTMX_PASSWORD environment variables to configure authentication.\n\n")
   }
   if(requireNamespace("scilis") && length(Sys.getenv("AMBHTMX_SECRET")) >= 2) {
     app <- app$use(scilis::scilis(Sys.getenv("AMBHTMX_SECRET")))
   } else {
-    print("Install scilis package and set AMBHTMX_SECRET environment variable to keep cookies safe.")
+    cat("\nLoad scilis package and set AMBHTMX_SECRET environment variable to keep cookies safe.\n\n")
   }
+  if(requireNamespace("signaculum")) {
+    if(is.null(favicon)) {    
+      cat("\nDefault favicon is used. You can customize it.\n\n")
+      favicon <- system.file("favicon.ico", package = "signaculum")    
+    }
+    app <- app$get("/favicon.ico", signaculum::signaculum(favicon))
+  } else {
+    cat("\nLoad signaculum package and set a favicon to customize the favicon.\n\n")
+  }  
   r <- list(
-    app = app$get("/favicon.ico", signaculum::signaculum(favicon)),
+    app = app,
     context = list(pool = pool, name = name, value = value),
     operations = list(
       add_row = add_row,
@@ -254,7 +260,7 @@ render_html <- \(html){
 
 #' Render a custom page with a custom title and main content
 #' @export
-render_page <- \(page_title = NULL, main = NULL) {    
+render_page <- \(main = NULL, page_title = NULL) {
   if (is.null(page_title)){
     penv <- rlang::env_parent()
     page_title <- penv[["page_title"]]
