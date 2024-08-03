@@ -2,12 +2,11 @@
 % Please edit documentation in R/ambhtmx.R
 \name{process_login_get}
 \alias{process_login_get}
-\title{Render login forms}
+\title{Render and send login page response}
 \usage{
 process_login_get(
   req,
   res,
-  ...,
   page_title = "Login",
   main = NULL,
   id = "login_form",
@@ -16,6 +15,26 @@ process_login_get(
   cookie_errors = "errors"
 )
 }
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{page_title}{if you need to customize the title of the page}
+
+\item{main}{if you need to customize the body of the login page}
+
+\item{id}{if you need to customize the id of the login form}
+
+\item{login_url}{if you need to customize the url of the login form}
+
+\item{style}{if you need to customize the styles of the login form}
+
+\item{cookie_errors}{if you need to customize the name of the errors cookie}
+}
+\value{
+the login page response
+}
 \description{
-Render login forms
+Render and send login page response
 }

@@ -11,6 +11,18 @@ process_loggedin_middleware(
   cookie_loggedin = "loggedin"
 )
 }
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{user}{if you want to customize the required user or it uses AMBHTMX_USER}
+
+\item{cookie_loggedin}{if you need to customize the name of the loggedin cookie}
+}
+\value{
+the updated request with the req$loggedin status
+}
 \description{
 Process loggedin middleware
 }

@@ -2,14 +2,16 @@
 % Please edit documentation in R/ambhtmx.R
 \name{render_tags}
 \alias{render_tags}
-\title{Rendering only html tags}
+\title{Render tags to character vector}
 \usage{
 render_tags(...)
-
-render_tags(...)
+}
+\arguments{
+\item{...}{one or more htmltools objects.}
+}
+\value{
+a character representation of input
 }
 \description{
-Rendering only html tags
-
 Render tags to character vector
 }

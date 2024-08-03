@@ -8,9 +8,23 @@ process_error_post(
   req,
   res,
   errors = NULL,
-  cookie_errrors = "errors",
+  cookie_errors = "errors",
   error_url = NULL
 )
+}
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{errors}{the error message character vector}
+
+\item{cookie_errors}{if you need to customize the name of the errors cookie}
+
+\item{error_url}{if you need to customize the url of the error to redirect to.}
+}
+\value{
+the error process response
 }
 \description{
 Process error post requests

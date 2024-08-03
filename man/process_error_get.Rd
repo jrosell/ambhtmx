@@ -6,6 +6,16 @@
 \usage{
 process_error_get(req, res, cookie_errors = "errors")
 }
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{cookie_errors}{if you need to customize the name of the errors cookie}
+}
+\value{
+the error character vector
+}
 \description{
 Process error get requests
 }

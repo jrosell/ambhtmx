@@ -6,6 +6,12 @@
 \usage{
 render_plot(p)
 }
+\arguments{
+\item{p}{a ggplot or another object that can be printed and captured as a png image}
+}
+\value{
+img htmltools tag with a data encoded src attribute
+}
 \description{
 Render imatge or ggplot to image tag
 }

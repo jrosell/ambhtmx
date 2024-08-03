@@ -6,6 +6,18 @@
 \usage{
 process_logout_get(req, res, cookie_loggedin = "loggedin", success_url = "/")
 }
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{cookie_loggedin}{if you need to customize the name of the loggedin cookie}
+
+\item{success_url}{if you need to customize the url of the success loggedin process}
+}
+\value{
+the logout process response
+}
 \description{
 Process logout requests
 }

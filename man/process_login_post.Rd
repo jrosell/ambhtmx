@@ -14,10 +14,38 @@ process_login_post(
   user_error = "Invalid user",
   password_error = "Invalid password",
   cookie_loggedin = "loggedin",
-  cookie_errrors = "errors",
+  cookie_errors = "errors",
   login_url = "/login",
   success_url = "/"
 )
+}
+\arguments{
+\item{req}{request object}
+
+\item{res}{response object}
+
+\item{user_param}{if you need to customize the name of the user parameter}
+
+\item{password_param}{if you need to customize the name of the password parameter}
+
+\item{user}{if you want to customize the required user or it uses AMBHTMX_USER}
+
+\item{password}{if you want to customize the required password  or it uses AMBHTMX_PASSWORD}
+
+\item{user_error}{if you need to customize the error message for the user}
+
+\item{password_error}{if you need to customize the error message for the password}
+
+\item{cookie_loggedin}{if you need to customize the name of the loggedin cookie}
+
+\item{cookie_errors}{if you need to customize the name of the errors cookie}
+
+\item{login_url}{if you need to customize the url of the login form}
+
+\item{success_url}{if you need to customize the url of the success loggedin process}
+}
+\value{
+the login process response
 }
 \description{
 Process login requests

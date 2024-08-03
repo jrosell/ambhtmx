@@ -1,4 +1,17 @@
+
+
 #' Creating an ambiorix + htmx app
+#' 
+#' @param dbname file path to store a SQLite database (optional).
+#' @param value a 1 row tibble with the names and types of the columns (optional)
+#' @param protocol (default AMBHTMX_PROTOCOL or http)
+#' @param host (default AMBHTMX_HOST or 127.0.0.1)
+#' @param port (default AMBHTMX_PORT or 3000) 
+#' @param live script with the file path (optional)
+#' @param favicon (optional)
+#' @param render_index function to be stored as a model method (optional)
+#' @param render_row function to be stored as a model method (optional)
+#' @returns A list with the ambiorix app, the running context and the model methods.
 #' @export
 ambhtmx_app <- \(
       dbname = NULL, 
@@ -69,11 +82,14 @@ ambhtmx_app <- \(
       error = \(e) stop(e)
     )
     if (is.null(value)) stop("Value is required")
-    if (is.null(value$id)) value$id <- uwu::new_v4(1)
+    if (is.null(value$id)) {
+      value <- value |> 
+        dplyr::mutate(id = uwu::new_v4(1))
+    }
     DBI::dbAppendTable(con, name = context$name, value = value)
     pool::poolReturn(con)
     return(value$id)
-  }
+    }
   read_row <- \(value = NULL,context = NULL, id = NULL){
     if (is.null(context)){
       penv <- rlang::env_parent()
@@ -212,23 +228,44 @@ ambhtmx_app <- \(
     )
   )
   return(r)
-  }
-
-#' Rendering only html tags
-#' @export
-render_tags <- \(taglist) {
-  html <- ""
-  tryCatch({
-        rendered <- renderTags(taglist)
-        html <- rendered$html
-    },
-    error = \(e) print(e)
-  )
 }
 
+
+#' Render a custom page with a custom title and main content
+#' 
+#' @param main htmltools object of the body of the html page
+#' @param page_title the title tag contents of the page
+#' @returns the rendered html of the full html page with dependencies
+#' @export
+render_page <- \(main = NULL, page_title = NULL) {
+  if (is.null(page_title)){
+    penv <- rlang::env_parent()
+    page_title <- penv[["page_title"]]
+  }
+  if (is.null(main)){
+    penv <- rlang::env_parent()
+    main <- penv[["main"]]
+  }
+  html_tags <- htmltools::tagList(
+    tags$head(
+      tags$title(page_title),
+      tags$style("body {background-color:white;}"),
+      tags$link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css", rel = "stylesheet", integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH",  crossorigin="anonymous"),
+      tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin="anonymous"),
+      tags$script(src = "https://unpkg.com/htmx.org@2.0.1")
+    ),
+    tags$body(
+      `hx-encoding` = "multipart/form-data",
+      main
+    ) 
+  )
+  render_html(html_tags) 
+}
+
+
 #' @noRd
-render_html <- \(html){
-  rendered <- htmltools::renderTags(html)
+render_html <- \(html_tags){
+  rendered <- htmltools::renderTags(html_tags)
   deps <- lapply(rendered$dependencies, function(dep) {
     dep <- htmltools::copyDependencyToDir(dep, "lib", FALSE)
     dep <- htmltools::makeDependencyRelative(dep, NULL, FALSE)
@@ -240,7 +277,6 @@ render_html <- \(html){
   bodyEnd <- if (!is.null(bodyBegin)) {
     "</body>"
   }
-
   html <- c(
     "<!DOCTYPE html>",
     '<html lang="en">',
@@ -258,40 +294,20 @@ render_html <- \(html){
   return(paste0(html, collapse = ""))
 }
 
-#' Render a custom page with a custom title and main content
-#' @export
-render_page <- \(main = NULL, page_title = NULL) {
-  if (is.null(page_title)){
-    penv <- rlang::env_parent()
-    page_title <- penv[["page_title"]]
-  }
-  if (is.null(main)){
-    penv <- rlang::env_parent()
-    main <- penv[["main"]]
-  }
-  html <- htmltools::tagList(
-    tags$head(
-      tags$title(page_title),
-      tags$style("body {background-color:white;}"),
-      tags$link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css", rel = "stylesheet", integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH",  crossorigin="anonymous"),
-      tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin="anonymous"),
-      tags$script(src = "https://unpkg.com/htmx.org@2.0.1")
-    ),
-    tags$body(
-      `hx-encoding` = "multipart/form-data",
-      main
-    ) 
-  )
-  render_html(html) 
-}
 
 #' Render tags to character vector
+#' 
+#' @param ... one or more htmltools objects.
+#' @returns a character representation of input
 #' @export
 render_tags <- \(...) {
   as.character(htmltools::tagList(...))
 }
 
 #' Render imatge or ggplot to image tag
+#' 
+#' @param p a ggplot or another object that can be printed and captured as a png image
+#' @returns img htmltools tag with a data encoded src attribute
 #' @export
 render_plot <- \(p){
   grDevices::png(p_file <- tempfile(fileext = ".png")); print(p); grDevices::dev.off()
@@ -300,12 +316,21 @@ render_plot <- \(p){
 }
 
 
-#' Render login forms
+#' Render and send login page response
+#' 
+#' @param req request object
+#' @param res response object
+#' @param page_title if you need to customize the title of the page
+#' @param main if you need to customize the body of the login page
+#' @param id if you need to customize the id of the login form
+#' @param login_url if you need to customize the url of the login form
+#' @param style if you need to customize the styles of the login form
+#' @param cookie_errors if you need to customize the name of the errors cookie
+#' @returns the login page response
 #' @export
 process_login_get <- \(
       req,
       res,
-      ...,
       page_title = "Login",
       main = NULL,
       id = "login_form",
@@ -321,7 +346,10 @@ process_login_get <- \(
     cat(glue::glue("\ncookie_errors {cookie_errors} is {req$cookie[[cookie_errors]]}\n\n"))
   }
 
-  if (is.character(cookie) && cookie != "" && length(cookie) > 0 && !stringr::str_detect(cookie, "devOpifex/scilis")) {
+  if (is.character(cookie) && cookie != "" && 
+      length(cookie) > 0 &&
+      !stringr::str_detect(cookie, "devOpifex/scilis")
+  ) {
     errors <- req$cookie[[cookie_errors]]    
     res$cookie(name = cookie_errors, value = "")
   }
@@ -348,27 +376,47 @@ process_login_get <- \(
   }
   html <- render_page(
     page_title = page_title,
-    main = tags$form(action = login_url, method = "post", enctype = "multipart/form-data", id = id, style = style, main)
+    main = tags$form(
+      action = login_url, 
+      method = "post", 
+      enctype = "multipart/form-data", 
+      id = id, 
+      style = style, 
+      main
+    )
   )
   res$send(html)
 }
 
 #' Process login requests
+#' 
+#' @param req request object
+#' @param res response object
+#' @param user_param if you need to customize the name of the user parameter
+#' @param password_param if you need to customize the name of the password parameter
+#' @param user if you want to customize the required user or it uses AMBHTMX_USER
+#' @param password if you want to customize the required password  or it uses AMBHTMX_PASSWORD
+#' @param user_error if you need to customize the error message for the user
+#' @param password_error if you need to customize the error message for the password
+#' @param cookie_loggedin if you need to customize the name of the loggedin cookie
+#' @param cookie_errors if you need to customize the name of the errors cookie
+#' @param login_url if you need to customize the url of the login form
+#' @param success_url if you need to customize the url of the success loggedin process
+#' @returns the login process response
 #' @export
 process_login_post <- \(
-      req,
-      res,
-      user_param = "user",
-      password_param = "password",
-      user = Sys.getenv("AMBHTMX_USER"),
-      password = Sys.getenv("AMBHTMX_PASSWORD"),
-      user_error = "Invalid user",
-      password_error = "Invalid password",
-      cookie_loggedin = "loggedin",
-      cookie_errrors = "errors",
-      login_url = "/login",
-      success_url = "/"
-    ) {
+    req,
+    res,
+    user_param = "user",
+    password_param = "password",
+    user = Sys.getenv("AMBHTMX_USER"),
+    password = Sys.getenv("AMBHTMX_PASSWORD"),
+    user_error = "Invalid user",
+    password_error = "Invalid password",
+    cookie_loggedin = "loggedin",
+    cookie_errors = "errors",
+    login_url = "/login",
+    success_url = "/") {
   if (is_debug_enabled()) print("process_login_post")
   params <- ambiorix::parse_multipart(req)  
   errors <- c("")
@@ -382,7 +430,7 @@ process_login_post <- \(
   if (length(errors)>1) {
     error_message <- paste0(errors[1:length(errors)-1], ". ", collapse = "")
     res$cookie(
-      name = cookie_errrors,
+      name = cookie_errors,
       value = error_message
     )    
     return(res$redirect(login_url, status = 302L))
@@ -402,6 +450,12 @@ process_login_post <- \(
 }
 
 #' Process logout requests
+#' 
+#' @param req request object
+#' @param res response object
+#' @param cookie_loggedin if you need to customize the name of the loggedin cookie
+#' @param success_url if you need to customize the url of the success loggedin process
+#' @returns the logout process response
 #' @export
 process_logout_get <- \(
       req,
@@ -421,6 +475,12 @@ process_logout_get <- \(
 }
 
 #' Process loggedin middleware
+#' 
+#' @param req request object
+#' @param res response object
+#' @param user if you want to customize the required user or it uses AMBHTMX_USER
+#' @param cookie_loggedin if you need to customize the name of the loggedin cookie
+#' @returns the updated request with the req$loggedin status
 #' @export
 process_loggedin_middleware <- \(
       req,
@@ -437,36 +497,27 @@ process_loggedin_middleware <- \(
   }
 }
 
-#' Process loggedin redirect
-#' @export
-process_loggedin_redirect <- \(
-      req,
-      res,
-      user = Sys.getenv("AMBHTMX_USER"),      
-      login_url = "/login"
-    ) { 
-  full_login_url <- glue::glue("{req$HTTP_HOST}{login_url}") |> 
-    stringr::str_replace()
-  if (!identical(req$loggedin, user)) {
-    return(res$redirect(full_login_url, status = 302L))
-  }
-  return(NULL)
-}
-
 
 #' Process error post requests
+#' 
+#' @param req request object
+#' @param res response object
+#' @param errors the error message character vector
+#' @param cookie_errors if you need to customize the name of the errors cookie
+#' @param error_url if you need to customize the url of the error to redirect to.
+#' @returns the error process response
 #' @export
 process_error_post <- \(
       req,
       res,
       errors = NULL,
-      cookie_errrors = "errors",
+      cookie_errors = "errors",
       error_url = NULL
     ) {  
   if (is_debug_enabled()) print("process_error_post")
   error_message <- paste0(errors, ". ", collapse = "")
   res$cookie(
-    name = cookie_errrors,
+    name = cookie_errors,
     value = error_message
   )
   res$header("HX-Redirect", error_url)
@@ -474,6 +525,11 @@ process_error_post <- \(
 }
 
 #' Process error get requests
+#' 
+#' @param req request object
+#' @param res response object
+#' @param cookie_errors if you need to customize the name of the errors cookie
+#' @returns the error character vector
 #' @export
 process_error_get <- \(
       req,

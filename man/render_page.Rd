@@ -6,6 +6,14 @@
 \usage{
 render_page(main = NULL, page_title = NULL)
 }
+\arguments{
+\item{main}{htmltools object of the body of the html page}
+
+\item{page_title}{the title tag contents of the page}
+}
+\value{
+the rendered html of the full html page with dependencies
+}
 \description{
 Render a custom page with a custom title and main content
 }

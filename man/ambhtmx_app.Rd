@@ -16,6 +16,28 @@ ambhtmx_app(
   render_row = NULL
 )
 }
+\arguments{
+\item{dbname}{file path to store a SQLite database (optional).}
+
+\item{value}{a 1 row tibble with the names and types of the columns (optional)}
+
+\item{protocol}{(default AMBHTMX_PROTOCOL or http)}
+
+\item{host}{(default AMBHTMX_HOST or 127.0.0.1)}
+
+\item{port}{(default AMBHTMX_PORT or 3000)}
+
+\item{live}{script with the file path (optional)}
+
+\item{favicon}{(optional)}
+
+\item{render_index}{function to be stored as a model method (optional)}
+
+\item{render_row}{function to be stored as a model method (optional)}
+}
+\value{
+A list with the ambiorix app, the running context and the model methods.
+}
 \description{
 Creating an ambiorix + htmx app
 }
