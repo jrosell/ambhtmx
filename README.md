@@ -1,3 +1,12 @@
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
+<!-- badges: end -->
+
+**THIS IS A WORK IN PROGRESS, DO NOT USE**
+
 # ambhtmx
 
 Build a Full-stack R App with ambiorix and htmx.
@@ -63,7 +72,7 @@ AMBHTMX_PORT=<to change port default 3000>
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/07.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
 
 
-## Deployment examples
+## Deployment examples (WIP)
 
 If you create a Dockerfile you can deploy your ambhtmx app to HuggingFace Spaces, Digital Ocean, Google Cloud, etc.
 
@@ -76,7 +85,8 @@ I created the ambhtmx.crud repo for the CRUD example on [Github](https://github.
 
 Known issues:
 
-* Authentication is not working. Are you trying to autenticate from 0.0.0.0 host? Cookies don't work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).
-* HuggingFace Spaces and Docker are not working. Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.
+* Are you trying to autenticate from 0.0.0.0 host? Cookies don't work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).
+* Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.
+* HuggingFace Spaces example is WIP and it's still not working.
 
 Another issue? Please, [let me know](https://github.com/jrosell/ambhtmx/issues).
