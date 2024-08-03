@@ -63,8 +63,15 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
+    if (is.null(context)){
+      stop("You need to set a context.")
+    }
+    tryCatch({
+        con <- pool::poolCheckout(context$pool)
+      },
+      error = \(e) stop(e)
+    )
     if (is.null(value)) stop("Value is required")
-    con <- pool::poolCheckout(context$pool)     
     if (is.null(value$id)) value$id <- uwu::new_v4(1)
     DBI::dbAppendTable(con, name = context$name, value = value)
     pool::poolReturn(con)
@@ -79,8 +86,14 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
-    if(is.null(id)) id = value$id
-    con <- pool::poolCheckout(context$pool)
+    if (is.null(context)){
+      stop("You need to set a context.")
+    }
+    tryCatch({
+        con <- pool::poolCheckout(context$pool)
+      },
+      error = \(e) stop(e)
+    )
     df <- dplyr::tbl(con, context$name) |>
       dplyr::filter(.data[["id"]] == {{ id }}) |>
       dplyr::collect()
@@ -96,7 +109,14 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
-    con <- pool::poolCheckout(context$pool)
+    if (is.null(context)){
+      stop("You need to set a context.")
+    }
+    tryCatch({
+        con <- pool::poolCheckout(context$pool)
+      },
+      error = \(e) stop(e)
+    )
     df <- dplyr::tbl(con, context$name) |>
       dplyr::filter(.data[["id"]] != "")
     if(collect) df <- dplyr::collect(df)
@@ -112,7 +132,14 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
-    con <- pool::poolCheckout(context$pool)
+    if (is.null(context)){
+      stop("You need to set a context.")
+    }
+    tryCatch({
+        con <- pool::poolCheckout(context$pool)
+      },
+      error = \(e) stop(e)
+    )
     if(!is.null(value[["id"]])) id = value$id
     value$id <- NULL
     columns_to_update <- paste0(paste0(names(value), "=\"", value, "\""), collapse = ", ")    
@@ -130,11 +157,14 @@ ambhtmx_app <- \(
       penv <- rlang::globalenv()
       context <- penv[["context"]]
     }
+    if (is.null(context)){
+      stop("You need to set a context.")
+    }
     tryCatch({
         con <- pool::poolCheckout(context$pool)
       },
-      error = \(e) print(e)
-    )    
+      error = \(e) stop(e)
+    )
     if(!is.null(value) && !is.null(value$id)) {
       sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
     }
