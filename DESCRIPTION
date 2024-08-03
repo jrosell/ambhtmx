@@ -20,7 +20,6 @@ Suggests:
     scilis (>= 0.0.0.9000),
     signaculum (>= 0.0.0.9000),
     usethis,
-    uwu (>= 0.0.0.9000),
     zeallot
 Imports: 
     ambiorix (>= 2.1.0),
@@ -34,9 +33,10 @@ Imports:
     rlang,
     RSQLite,
     stringr,
-    tibble
+    tibble,
+    uwu (>= 0.0.0.9000)
 Remotes:  
     devOpifex/ambiorix,
     devOpifex/scilis,
     devOpifex/signaculum,
-    r-universe::josiahparry/uwu
+    JosiahParry/uwu

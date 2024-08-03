@@ -68,7 +68,7 @@ rebuild_docs_and_check <- function() {
   suggests_dev_packages |> purrr::map(
     \(x){usethis::use_dev_package(x, type = "Suggests"); x}
   )
-  usethis::use_dev_package("uwu", remote = "r-universe::josiahparry/uwu", type = "Suggests")
+  usethis::use_dev_package("uwu", remote = "JosiahParry/uwu", type = "Imports")
 
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
