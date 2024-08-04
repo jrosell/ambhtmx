@@ -88,7 +88,12 @@ ambhtmx_app <- \(
       value <- value |>
         dplyr::mutate(id = uwu::new_v4(1))
     }
-    DBI::dbAppendTable(con, name = context$name, value = value)
+    if (is_debug_enabled()) {print("value"); print(value)}
+    tryCatch({
+        DBI::dbAppendTable(con, name = context$name, value = value)
+      },
+      error = \(e) stop(e)
+    )   
     pool::poolReturn(con)
     return(value$id)
     }
