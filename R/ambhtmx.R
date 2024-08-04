@@ -53,6 +53,7 @@ ambhtmx_app <- \(
     })
     con <- pool::poolCheckout(pool)
     name <- stringr::str_split(dbname, stringr::fixed("."))[[1]][1]
+    if (stringr::str_detect(name, "/")) name <- dplyr::last(stringr::str_split("/tmp/RtmpUkt3qX/file7653f58e0", "/")[[1]])
     if (create_table) {            
       DBI::dbWriteTable(
         con,
