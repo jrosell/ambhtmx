@@ -1,4 +1,4 @@
-library(ambhtmx)
+library(ambhtmx) 
 # devtools::load_all()
 library(ambiorix)
 library(tidyverse)
@@ -19,14 +19,15 @@ c(app, context, operations) %<-% ambhtmx_app(live = live_path)
 app$get("/", \(req, res){
   html <- render_page(
     page_title = "ambiorix + htmx example",
-    main = withTags(div(style = "margin: 100px", tagList(
-        h1("ambhtmx live hot realoading example"),
-        p(id = "counter", glue("Counter is set to {counter}")),
-        button(
-          "+1",
-          `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
-        )
-    )))
+    main = div(
+      style = "margin: 100px", 
+      h1("ambhtmx live hot realoading example"),
+      p(id = "counter", glue("Counter is set to {counter}")),
+      button(
+        "+1",
+        `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
+      )
+    )
   )
   res$send(html)
 })

@@ -1,4 +1,4 @@
-library(ambhtmx)
+library(ambhtmx) 
 # devtools::load_all()
 library(ambiorix)
 library(tidyverse)
@@ -58,18 +58,18 @@ app$get("/", \(req, res){
   rexp_plot <- generate_plot()
   html <- render_page(
     page_title = "ambhtmx basic authentication example",
-    main = withTags(div(style = "margin: 20px", tagList(
+    main = div(style = "margin: 20px", 
       div(style ="float:right", id = "logout", button("Logout", onclick = "void(location.href='/logout')")),
       h1(hello),
-      div(id = "counter", withTags(tagList(
+      div(id = "counter", 
           p(glue("Counter is set to {counter}")),
           render_plot(rexp_plot)
-      ))),
+      ),
       button(
         "+1",
         `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
       )
-    )))
+    )
   )
   res$send(html)
 })

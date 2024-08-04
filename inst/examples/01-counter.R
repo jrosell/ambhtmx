@@ -17,14 +17,15 @@ app$get("/", \(req, res){
     {
       html <- render_page(
         page_title = "ambhtmx counter example",
-        main = withTags(div(style = "margin: 20px", tagList(
+        main = div(
+            style = "margin: 20px", 
             h1("ambhtmx counter example"),
             p(id = "counter", glue("Counter is set to {counter}")),
             button(
               "+1",
               `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
             )
-        )))
+        )
       )
     },
     error = \(e) html <- p(e)

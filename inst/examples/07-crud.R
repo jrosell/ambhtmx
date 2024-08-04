@@ -1,5 +1,5 @@
-# library(ambhtmx) 
-devtools::load_all()
+library(ambhtmx)
+# devtools::load_all() 
 library(ambiorix)
 library(tidyverse)
 library(zeallot)
@@ -36,7 +36,7 @@ render_index <- \() {
             )
           })
       }
-      main <- withTags(div(id = "page", style = "margin: 50px",
+      main <- div(id = "page", style = "margin: 50px",
           div(style ="float:right", id = "logout", button("Logout", onclick = "void(location.href='/logout')")),
           h1(page_title),
           div(id = "main", style = "margin-top: 20px", tagList(
@@ -50,7 +50,7 @@ render_index <- \() {
                   `hx-swap` = "innerHTML"
                 )
           ))
-      ))
+      )
     },
     error = \(e) print(e)
   )
@@ -170,7 +170,7 @@ app$get("/items/new", \(req, res){
     return(res$redirect("/login", status = 302L))
   }
   errors <- process_error_get(req, res)
-  html <- render_tags(withTags(tagList(
+  html <- render_tags(tagList(
       h2("New item"),
       div(label("Name", p(input(name = "name")))),
       div(label("Content", p(textarea(name = "content")))),
@@ -193,7 +193,7 @@ app$get("/items/new", \(req, res){
         `hx-include` = "[name='name'], [name='content']",
       ),
       errors
-  )))
+  ))
   res$send(html)
 })
 
@@ -205,7 +205,7 @@ app$get("/items/:id", \(req, res){
   }
   item_id <- req$params$id %||% ""
   item <- items$read_row(id = item_id)   
-  html <- render_tags(withTags(tagList(
+  html <- render_tags(tagList(
     h2("Show item details"),
     items$render_row(item),
     a(
@@ -233,7 +233,7 @@ app$get("/items/:id", \(req, res){
       `hx-target` = "#main",
       `hx-swap` = "innerHTML"
     )
-  )))
+  ))
   res$send(html)
 })
 
@@ -244,7 +244,7 @@ app$get("/items/:id/edit", \(req, res){
   }
   item_id <- req$params$id %||% ""
   item <- items$read_row(id = item_id)
-  html <- render_tags(withTags(tagList(
+  html <- render_tags(tagList(
     h2("Edit item"),
     input(type = "hidden", name = "id", value = item$id),
     div(label("Name", p(input(name = "name", value = item$name)))),
@@ -267,7 +267,7 @@ app$get("/items/:id/edit", \(req, res){
       `hx-swap` = "outerHTML",
       `hx-include` = "[name='name'], [name='content']",
     )
-  )))
+  ))
   res$send(html)
 })
 

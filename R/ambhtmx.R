@@ -37,8 +37,10 @@ ambhtmx_app <- \(
   port <- port %||% Sys.getenv("AMBHTMX_PORT") %||% "8000"
   host <- host %||% Sys.getenv("AMBHTMX_HOST") %||% "127.0.0.1"
   if (live != "") {
-    warning("live = TRUE is alpha")    
-    cat(glue::glue("\nRun on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
+    warning("live = TRUE is alpha")     
+    # ps -ef | grep "nodemon --signal SIGTERM "
+    args1 <- commandArgs()[1]
+    cat(glue::glue("\nRun from {args1} on the terminal for hot reloading:\nnpx nodemon --signal SIGTERM {live}\n\n\n"))
   }  
   if (nrow(value) == 1) {
     create_table <- !is.null(dbname) && !file.exists(dbname)
@@ -82,8 +84,8 @@ ambhtmx_app <- \(
       error = \(e) stop(e)
     )
     if (is.null(value)) stop("Value is required")
-    if (is.null(value$id)) {
-      value <- value |> 
+    if (is.null(value[["id"]])) {
+      value <- value |>
         dplyr::mutate(id = uwu::new_v4(1))
     }
     DBI::dbAppendTable(con, name = context$name, value = value)
@@ -263,8 +265,55 @@ render_page <- \(main = NULL, page_title = NULL) {
 }
 
 
+
+#' Render a custom page with a custom title and main content
+#' 
+#' @param res response object
+#' @param main htmltools object of the body of the html page
+#' @param page_title the title tag contents of the page
+#' @returns the response page
+#' @export
+send_page <- \(main, res, ...) {  
+  html <- render_page(main = main, ...)
+  res$send(html)
+}
+
 #' @noRd
-render_html <- \(html_tags){
+replace_hx_attrs <- function(x) {
+  if (is.list(x)) {
+    # Check if the element has a named list called 'attribs'
+    if ("attribs" %in% names(x)) {
+      # Replace 'hx_' with 'hx-' in attribute names
+      names(x$attribs) <- gsub("hx_", "hx-", names(x$attribs))
+    }
+    
+    # Apply the function recursively to all elements of the list
+    x <- lapply(x, replace_hx_attrs)
+  }
+  
+  return(x)
+}
+
+#' @noRd
+replace_hx_attrs <- function(x) {
+  if (is.list(x)) {
+    # Check if the element has a named list called 'attribs'
+    if ("attribs" %in% names(x)) {
+      # Replace 'hx_' with 'hx-' in attribute names
+      names(x$attribs) <- gsub("hx_", "hx-", names(x$attribs))
+    }
+    
+    # Apply the function recursively to all elements of the list
+    original_class <- class(x)
+    x <- lapply(x, replace_hx_attrs)
+    class(x) <- original_class
+  }
+  return(x)
+}
+
+#' @noRd
+render_html <- \(htmx_tags){
+  html_tags <- replace_hx_attrs(htmx_tags)
   rendered <- htmltools::renderTags(html_tags)
   deps <- lapply(rendered$dependencies, function(dep) {
     dep <- htmltools::copyDependencyToDir(dep, "lib", FALSE)

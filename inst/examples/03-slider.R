@@ -22,12 +22,14 @@ app$get("/", \(req, res){
   rexp_plot <- generate_plot()
   html <- render_page(
     page_title = "ambhtmx slider example",
-    main = withTags(div(style = "margin: 20px", tagList(
+    main = div(
+      style = "margin: 20px",
       h1("ambiorix + htmx example"),
-      div(id = "counter", withTags(tagList(
-          p(glue("Counter is set to {counter}")),
-          render_plot(rexp_plot)
-      ))),
+      div(
+        id = "counter",
+        p(glue("Counter is set to {counter}")),
+        render_plot(rexp_plot)
+      ),
       button(
         "+1",
         `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
@@ -44,7 +46,7 @@ app$get("/", \(req, res){
         `hx-target`="#counter",
         `hx-swap`="innerHTML"
       )
-    )))
+    )
   )
   res$send(html)
 })

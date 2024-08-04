@@ -1,5 +1,5 @@
-# library(ambhtmx)
-devtools::load_all()
+library(ambhtmx) 
+# devtools::load_all()
 library(ambiorix)
 library(tidyverse)
 library(zeallot)
@@ -15,14 +15,15 @@ c(app, context, operations) %<-% ambhtmx_app()
 app$get("/", \(req, res){
   html <- render_page(
     page_title = "ambhtmx ggplot2 example",
-    main = withTags(div(style = "margin: 20px", tagList(
+    main = div(
+      style = "margin: 20px",
       h1("ambiorix + htmx example"),
       p(id = "counter", glue("Counter is set to {counter}")),
       button(
         "+1",
         `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
       )
-    )))
+    )
   )
   res$send(html)
 })

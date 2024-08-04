@@ -1,4 +1,4 @@
-library(ambhtmx)
+library(ambhtmx) 
 # devtools::load_all()
 library(ambiorix)
 library(scilis)
@@ -19,23 +19,21 @@ data_delete <- operations$delete_row
 
 #' Some todo functions
 todo_page <- \(items) {
-  tagList(
-    tags$div(
-      class = "container small-container",
-      create_card(
-        class = "my-3",
-        title = "Get Things Done!",
-        title_class = "text-center",
-        todo_form()
-      ),
-      create_card(
-        class = "my-3",
-        tags$div(
-          id = "todo_items",
-          `hx-target` = "this",
-          `hx-swap` = "innerHTML",
-          create_todo_list(items)
-        )
+  div(
+    class = "container small-container",
+    create_card(
+      class = "my-3",
+      title = "Get Things Done!",
+      title_class = "text-center",
+      todo_form()
+    ),
+    create_card(
+      class = "my-3",
+      tags$div(
+        id = "todo_items",
+        `hx-target` = "this",
+        `hx-swap` = "innerHTML",
+        create_todo_list(items)
       )
     )
   )
@@ -202,10 +200,11 @@ app$get("/", \(req, res){
   todos <- data_read(context = context)
   html <- render_page(
     page_title = "ambhtmx todo example",
-    main = withTags(div(style = "margin: 20px", tagList(
+    main = div(
+      style = "margin: 20px", 
       h1("ambhtmx todo example"),
       todo_page(items = data_read(context = context))
-    )))
+    )
   )
   res$send(html)
 })
