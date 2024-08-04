@@ -89,6 +89,5 @@ Known issues:
 
 * Are you trying to autenticate from 0.0.0.0 host? Cookies don't work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).
 * Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.
-* HuggingFace Spaces example is WIP and it's still not working.
 
 Another issue? Please, [let me know](https://github.com/jrosell/ambhtmx/issues).
