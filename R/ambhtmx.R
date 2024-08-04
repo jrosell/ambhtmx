@@ -546,32 +546,6 @@ process_loggedin_middleware <- \(
 }
 
 
-#' Process error post requests
-#' 
-#' @param req request object
-#' @param res response object
-#' @param errors the error message character vector
-#' @param cookie_errors if you need to customize the name of the errors cookie
-#' @param error_url if you need to customize the url of the error to redirect to.
-#' @returns the error process response
-#' @export
-process_error_post <- \(
-      req,
-      res,
-      errors = NULL,
-      cookie_errors = "errors",
-      error_url = NULL
-    ) {  
-  if (is_debug_enabled()) print("process_error_post")
-  error_message <- paste0(errors, ". ", collapse = "")
-  res$cookie(
-    name = cookie_errors,
-    value = error_message
-  )
-  res$header("HX-Redirect", error_url)
-  return(res$redirect(error_url, status = 302L))
-}
-
 #' Process error get requests
 #' 
 #' @param req request object

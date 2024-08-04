@@ -1,19 +1,7 @@
 library(ambhtmx)
 # devtools::load_all() 
-library(ambiorix)
-library(tidyverse)
-library(zeallot)
-library(glue)
-library(htmltools)
-library(signaculum)
 
 page_title <- "Password protected CRUD (Create, Read, Update, and Delete) example with ambhtmx"
-
-live_path <- tryCatch(
-  {this.path::this.path()},
-  error = function(e) return("")
-)
-print(live_path)
 
 render_index <- \() {
   main <- NULL
@@ -57,6 +45,33 @@ render_index <- \() {
   return(main)
 }
 
+render_new <- \(req, res) {
+  errors <- process_error_get(req, res)
+  render_tags(tagList(
+    h2("New item"),
+    div(label("Name", p(input(name = "name")))),
+    div(label("Content", p(textarea(name = "content")))),
+    a(
+      "Go back",
+      href = "/",
+      style = "margin-right:20px",
+      `hx-confirm` = "Are you sure you want to go back?",
+      `hx-get` = "/items",
+      `hx-target` = "#page",
+      `hx-swap` = "outerHTML",
+      `hx-encoding` = "multipart/form-data"
+    ),      
+    button(
+      "Create",
+      style = "margin-top:20px",
+      `hx-post` = "/items",
+      `hx-target` = "#page",
+      `hx-swap` = "outerHTML",
+      `hx-include` = "[name='name'], [name='content']",
+    ),
+    errors
+  ))
+}
 
 render_row <- \(item) {
   tags$div(    
@@ -76,7 +91,6 @@ c(app, context, items) %<-%
       name = character(1),
       content = character(1)
     ),
-    live = live_path,
     render_index = render_index,
     render_row = render_row
   )
@@ -86,22 +100,13 @@ app$get("/login", \(req, res) {
   process_login_get(req, res)
 })
 app$post("/login", \(req, res) {      
-  process_login_post(
-    req,
-    res,
-    user = Sys.getenv("AMBHTMX_USER"),
-    password = Sys.getenv("AMBHTMX_PASSWORD")
-  )
+  process_login_post(req, res)
 })
 app$get("/logout", \(req, res) {
   process_logout_get(req, res)
 })
 app$use(\(req, res){
-  process_loggedin_middleware(
-    req,
-    res,
-    user = Sys.getenv("AMBHTMX_USER")
-  )
+  process_loggedin_middleware(req, res)
 })
 
 #' Some CRUD operations examples
@@ -169,31 +174,11 @@ app$get("/items/new", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
-  errors <- process_error_get(req, res)
-  html <- render_tags(tagList(
-      h2("New item"),
-      div(label("Name", p(input(name = "name")))),
-      div(label("Content", p(textarea(name = "content")))),
-      a(
-        "Go back",
-        href = "/",
-        style = "margin-right:20px",
-        `hx-confirm` = "Are you sure you want to go back?",
-        `hx-get` = "/items",
-        `hx-target` = "#page",
-        `hx-swap` = "outerHTML",
-        `hx-encoding` = "multipart/form-data"
-      ),      
-      button(
-        "Create",
-        style = "margin-top:20px",
-        `hx-post` = "/items",
-        `hx-target` = "#page",
-        `hx-swap` = "outerHTML",
-        `hx-include` = "[name='name'], [name='content']",
-      ),
-      errors
-  ))
+  tryCatch({
+      html <- render_new(req, res)
+    },
+    error = \(e) print(e)
+  )  
   res$send(html)
 })
 
@@ -271,6 +256,7 @@ app$get("/items/:id/edit", \(req, res){
   res$send(html)
 })
 
+
 #' Create a new item
 app$post("/items", \(req, res){
   if (!req$loggedin) {    
@@ -278,12 +264,15 @@ app$post("/items", \(req, res){
   }
   params <- parse_multipart(req)  
   if (is.null(params[["name"]])) {    
-    return(process_error_post(
-      req,
-      res,
-      errors = "Name is required",
-      error_url = "/items/new"
-    ))
+    error_message <- "Name is required."
+    res$cookie(
+      name = "errors",
+      value = error_message
+    )
+    res$header("HX-Retarget", "#main")
+    res$header("HX-Reswap", "innerHTML")
+    print("Retarget amb error")
+    return(res$send(render_new(req, res)))
   }
   if (is.null(params[["content"]])) {
     params[["content"]] = ""

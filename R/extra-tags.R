@@ -42,3 +42,23 @@ input <- htmltools::tags$input
 #' @rdname builder
 #' @export
 label <- htmltools::tags$label
+
+#' @rdname builder
+#' @export
+nav <- htmltools::tags$nav
+
+#' @rdname builder
+#' @export
+li <- htmltools::tags$li
+
+#' @rdname builder
+#' @export
+ul <- htmltools::tags$ul
+
+#' @rdname builder
+#' @export
+ol <- htmltools::tags$ol
+
+#' @rdname builder
+#' @export
+form <- htmltools::tags$form

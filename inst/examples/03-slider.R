@@ -1,10 +1,5 @@
 library(ambhtmx)
-# devtools::load_all()
-library(ambiorix)
-library(tidyverse)
-library(zeallot)
-library(glue)
-library(htmltools)
+library(ggplot2)
 
 #' Starting the app
 counter <- 1

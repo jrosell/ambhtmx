@@ -1,10 +1,6 @@
 library(ambhtmx) 
 # devtools::load_all()
-library(ambiorix)
-library(tidyverse)
-library(zeallot)
-library(glue)
-library(htmltools)
+library(ggplot2)
 
 page_title <- "ambhtmx basic authentication example"
 
@@ -14,9 +10,7 @@ live_path <- tryCatch(
 )
 
 #' Starting the app
-c(app, context, operations) %<-% ambhtmx_app(
-  live = live_path
-)
+c(app, context, operations) %<-% ambhtmx_app()
 
 #' Authentication feature with secret cookies and .Renviron variables
 app$get("/login", \(req, res) {
@@ -85,5 +79,5 @@ app$post("/increment", \(req, res){
 })
 
 #' Start the app with all the previous defined routes
-app$start(open = FALSE)
+app$start()
 
