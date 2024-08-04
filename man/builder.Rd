@@ -6,6 +6,11 @@
 \alias{textarea}
 \alias{input}
 \alias{label}
+\alias{nav}
+\alias{li}
+\alias{ul}
+\alias{ol}
+\alias{form}
 \title{Create HTML tags}
 \usage{
 button(..., .noWS = NULL, .renderHook = NULL)
@@ -15,6 +20,16 @@ textarea(..., .noWS = NULL, .renderHook = NULL)
 input(..., .noWS = NULL, .renderHook = NULL)
 
 label(..., .noWS = NULL, .renderHook = NULL)
+
+nav(..., .noWS = NULL, .renderHook = NULL)
+
+li(..., .noWS = NULL, .renderHook = NULL)
+
+ul(..., .noWS = NULL, .renderHook = NULL)
+
+ol(..., .noWS = NULL, .renderHook = NULL)
+
+form(..., .noWS = NULL, .renderHook = NULL)
 }
 \arguments{
 \item{...}{Tag attributes (named arguments) and children (unnamed arguments).
