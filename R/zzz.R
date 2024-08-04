@@ -8,8 +8,9 @@ attach_library <- function(pkg) {
 }
 
 .onAttach <- function(...) {
-  ambhtmx_core <- c("ambiorix", "htmltools", "tibble", "dplyr", "purrr", "stringr", "glue", "zeallot")
-
+  ambhtmx_core <- c("ambiorix", "htmltools", "tibble", "dplyr", "purrr", "stringr", "glue")
+  if(rlang::is_installed("zeallot")) ambhtmx_core <- c(ambhtmx_core, "zeallot")
+  
   invisible(suppressPackageStartupMessages(
     lapply(ambhtmx_core, attach_library)
   ))

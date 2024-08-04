@@ -1,4 +1,9 @@
-library(ambhtmx) 
+tryCatch({
+    library(ambhtmx) 
+  },
+  error = \(e) print(e)
+)
+
 # devtools::load_all()
 
 #' Starting the app
@@ -8,18 +13,23 @@ c(app, context, operations) %<-% ambhtmx_app()
 
 #' Main page of the app
 app$get("/", \(req, res){
-  html <- render_page(
-    page_title = "ambhtmx ggplot2 example",
-    main = div(
-      style = "margin: 20px",
-      h1("ambiorix + htmx example"),
-      p(id = "counter", glue("Counter is set to {counter}")),
-      button(
-        "+1",
-        `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
+  tryCatch({
+      html <- render_page(
+        page_title = "ambhtmx ggplot2 example",
+        main = div(
+          style = "margin: 20px",
+          h1("ambiorix + htmx example"),
+          p(id = "counter", glue("Counter is set to {counter}")),
+          button(
+            "+1",
+            `hx-post`="/increment", `hx-target`="#counter", `hx-swap`="innerHTML"
+          )
+        )
       )
-    )
+    },
+    error = \(e) print(e)
   )
+  print(html)
   res$send(html)
 })
 

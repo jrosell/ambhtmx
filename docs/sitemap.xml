@@ -16,6 +16,9 @@
     <loc>/reference/ambhtmx_app.html</loc>
   </url>
   <url>
+    <loc>/reference/builder.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -50,5 +53,8 @@
   </url>
   <url>
     <loc>/reference/render_tags.html</loc>
+  </url>
+  <url>
+    <loc>/reference/send_page.html</loc>
   </url>
 </urlset>

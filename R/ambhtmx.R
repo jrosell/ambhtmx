@@ -270,8 +270,7 @@ render_page <- \(main = NULL, page_title = NULL) {
 #' 
 #' @param res response object
 #' @param main htmltools object of the body of the html page
-#' @param page_title the title tag contents of the page
-#' @returns the response page
+#' @param ... other paramters to the render page function
 #' @export
 send_page <- \(main, res, ...) {  
   html <- render_page(main = main, ...)

@@ -32,8 +32,8 @@ rebuild_docs_and_check <- function() {
       "pkgdown",
       "devtools",
       "usethis",
-      "zeallot",
       "ggplot2",
+      "zeallot",
       "uwu"
   )
   suggests_packages |> purrr::map(
