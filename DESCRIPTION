@@ -25,6 +25,7 @@ Imports:
     ambiorix (>= 2.1.0),
     b64,
     DBI,
+    dbplyr,
     dplyr,
     glue,
     htmltools,
