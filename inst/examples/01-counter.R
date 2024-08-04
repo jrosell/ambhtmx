@@ -1,14 +1,13 @@
 library(ambhtmx)
 # devtools::load_all()
-library(ambiorix)
-library(tidyverse)
-library(zeallot)
-library(glue)
-library(htmltools)
 
 #' Starting the app
 counter <- 0
-c(app, context, operations) %<-% ambhtmx_app()
+tryCatch({
+    c(app, context, operations) %<-% ambhtmx_app()
+  },
+  error = \(e) print(e)
+)
 
 #' Main page of the app
 app$get("/", \(req, res){

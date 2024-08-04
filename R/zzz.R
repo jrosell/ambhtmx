@@ -8,7 +8,7 @@ attach_library <- function(pkg) {
 }
 
 .onAttach <- function(...) {
-  ambhtmx_core <- c("ambiorix", "htmltools", "tibble", "dplyr", "purrr", "stringr", "glue")
+  ambhtmx_core <- c("ambiorix", "htmltools", "tibble", "dplyr", "purrr", "stringr", "glue", "zeallot")
 
   invisible(suppressPackageStartupMessages(
     lapply(ambhtmx_core, attach_library)
