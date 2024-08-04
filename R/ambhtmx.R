@@ -164,7 +164,12 @@ ambhtmx_app <- \(
     value$id <- NULL
     columns_to_update <- paste0(paste0(names(value), "=\"", value, "\""), collapse = ", ")    
     sql <- glue::glue("UPDATE {context$name} SET {columns_to_update} WHERE id=\"{id}\"")
-    invisible(DBI::dbExecute(con, sql))
+    if (is_debug_enabled()) {print("sql"); print(sql)}
+    tryCatch({
+        invisible(DBI::dbExecute(con, sql))
+      },
+      error = \(e) print(e)
+    )
     pool::poolReturn(con)
     invisible(NULL)
   }
@@ -185,13 +190,14 @@ ambhtmx_app <- \(
       },
       error = \(e) stop(e)
     )
-    if(!is.null(value) && !is.null(value$id)) {
+    if(!is.null(value) && !is.null(value[["id"]])) {
       sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{value$id}\"")
     }
     if(!is.null(id)) {
       sql <- glue::glue("DELETE FROM {context$name} WHERE id=\"{id}\"")
     }
     tryCatch({
+        if (is_debug_enabled()) {print("sql"); print(sql)}
         invisible(DBI::dbExecute(con, sql))
       },
       error = \(e) print(e)
