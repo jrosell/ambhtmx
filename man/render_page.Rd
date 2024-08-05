@@ -19,3 +19,6 @@ the rendered html of the full html page with dependencies
 \description{
 Render a custom page with a custom title and main content
 }
+\details{
+It can throw exceptions, so handling exceptions is recommended, if not a must.
+}

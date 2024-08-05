@@ -275,6 +275,9 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
   if (is.null(main)){    
     main <- genv[["main"]]
   }
+  if (is.null(main)){    
+    main <- htmltools::HTML("")
+  }
   if (is.null(head_tags)){    
     head_tags <- penv[["head_tags"]]
   }
@@ -287,24 +290,20 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
       tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin="anonymous"),
       htmltools::HTML('<script src="https://cdn.jsdelivr.net/gh/gnat/surreal@main/surreal.js"></script><script src="https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js"></script>')
     )
-  }
-  tryCatch(
-    expr = {
-      html_tags <- htmltools::tagList(
-        tags$head(
-          tags$title(page_title),
-          tags$style("body {background-color:white;}"),
-          tags$script(src = "https://unpkg.com/htmx.org@2.0.1"),
-          head_tags,      
-        ),
-        tags$body(
-          `hx-encoding` = "multipart/form-data",
-          main
-        ) 
-      )
-    },
-    error = \(e) print(e)
+  }     
+  html_tags <- htmltools::tagList(
+    tags$head(
+      tags$title(page_title),
+      tags$style("body {background-color:white;}"),
+      tags$script(src = "https://unpkg.com/htmx.org@2.0.1"),
+      head_tags,      
+    ),
+    tags$body(
+      `hx-encoding` = "multipart/form-data",
+      main
+    ) 
   )
+
   render_html(html_tags) 
 }
 
@@ -316,11 +315,33 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
 #' @param main htmltools object of the body of the html page
 #' @param ... other paramters to the render page function
 #' @export
-send_page <- \(main, res, ...) {
+send_page <- \(main = NULL, res, ...) {
   html <- "Sorry. The system can't render the page as expected."
   tryCatch(
     expr = {
       html <- render_page(main = main, ...)
+    },
+    error = \(e) print(e)
+  )
+  res$send(html)
+}
+
+
+#' Render a custom page with a custom title and main content
+#' 
+#' @param main htmltools object to render
+#' @param res response object
+#' @param ... htmltools object to render
+#' @export
+send_tags <- \(main = NULL, res, ...) {
+  html <- "Sorry. The system can't render the tags as expected."
+  tryCatch(
+    expr = {
+      if (!is.null(main)) {
+        html <- render_tags(main, ...)
+      } else {
+        html <- render_tags(...)
+      }
     },
     error = \(e) print(e)
   )
@@ -398,6 +419,7 @@ render_html <- \(htmx_tags){
     '<html lang="en">',
     "<head>",
     "<meta charset=\"utf-8\"/>",
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
     rendered$head,
     "<style>body{background-color:white;}</style>",
     htmltools::renderDependencies(deps, c("href", "file")),

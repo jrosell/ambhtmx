@@ -1,4 +1,5 @@
 library(ambhtmx)
+# devtools::load_all()
 library(ggplot2)
 
 #' Starting the app
@@ -15,9 +16,7 @@ generate_plot <- \(){
 #' Main page of the app
 app$get("/", \(req, res){
   rexp_plot <- generate_plot()
-  html <- render_page(
-    page_title = "ambhtmx slider example",
-    main = div(
+  div(
       style = "margin: 20px",
       h1("ambiorix + htmx example"),
       div(
@@ -41,9 +40,9 @@ app$get("/", \(req, res){
         `hx-target`="#counter",
         `hx-swap`="innerHTML"
       )
-    )
+    ) |> 
+    send_page(res, page_title = "ambhtmx slider example"
   )
-  res$send(html)
 })
 
 
@@ -52,10 +51,11 @@ app$post("/increment", \(req, res){
   counter <<- counter + 1
   rexp_data <<- c(rexp_data, rexp(1))
   rexp_plot <- generate_plot()
-  res$send(render_tags(
-    tags$p(glue("Counter is set to {counter}")),
-    render_plot(rexp_plot)
-  ))
+  tagList(
+      p(glue("Counter is set to {counter}")),
+      render_plot(rexp_plot)
+    ) |> 
+    send_tags(res)
 })
 
 #' Post call to update the plot accordint to the slider
@@ -65,10 +65,11 @@ app$post("/increment_slider", \(req, res){
   counter <<- counter + slider_value
   rexp_data <<- c(rexp_data, rexp(slider_value))
   rexp_plot <- generate_plot()
-  res$send(render_tags(
-    tags$p(glue("Counter is set to {counter}")),
-    render_plot(rexp_plot)
-  ))
+  tagList(
+      p(glue("Counter is set to {counter}")),
+      render_plot(rexp_plot)
+    ) |> 
+    send_tags(res)
 })
 
 #' Start the app with all the previous defined routes

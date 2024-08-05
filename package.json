@@ -15,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3"
   }
 }

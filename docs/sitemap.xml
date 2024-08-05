@@ -19,6 +19,9 @@
     <loc>/reference/builder.html</loc>
   </url>
   <url>
+    <loc>/reference/component.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>/reference/send_page.html</loc>
+  </url>
+  <url>
+    <loc>/reference/send_tags.html</loc>
   </url>
   <url>
     <loc>/reference/style_from_css_tpl.html</loc>

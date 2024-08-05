@@ -269,6 +269,8 @@ app$post("/items", \(req, res){
       name = "errors",
       value = error_message
     )
+
+    res$header("HX-Retarget", "#main")
     res$header("HX-Retarget", "#main")
     res$header("HX-Reswap", "innerHTML")
     print("Retarget amb error")
