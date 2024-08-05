@@ -32,7 +32,7 @@ todo_form <- \(item_id = NULL, item_value = "", type = "add") {
           ),
           amb_button(
             type = "submit",
-            id = "add_btn",
+            id = "add_btn", 
             class = "btn",
             if (add) "+" else "ok"
           )

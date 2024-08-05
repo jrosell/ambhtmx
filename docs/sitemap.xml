@@ -1,72 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ambhtmx_app.html</loc>
-  </url>
-  <url>
-    <loc>/reference/builder.html</loc>
-  </url>
-  <url>
-    <loc>/reference/component.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_error_get.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_error_post.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_loggedin_middleware.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_loggedin_redirect.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_login_get.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_login_post.html</loc>
-  </url>
-  <url>
-    <loc>/reference/process_logout_get.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rebuild_docs_and_check.html</loc>
-  </url>
-  <url>
-    <loc>/reference/render_page.html</loc>
-  </url>
-  <url>
-    <loc>/reference/render_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/render_tags.html</loc>
-  </url>
-  <url>
-    <loc>/reference/script_from_js_tpl.html</loc>
-  </url>
-  <url>
-    <loc>/reference/send_page.html</loc>
-  </url>
-  <url>
-    <loc>/reference/send_tags.html</loc>
-  </url>
-  <url>
-    <loc>/reference/style_from_css_tpl.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jrosell.github.io/ambhtmx/404.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/LICENSE.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/authors.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/index.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/ambhtmx_app.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/builder.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/component.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/index.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_error_get.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_error_post.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_loggedin_middleware.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_loggedin_redirect.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_login_get.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_login_post.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/process_logout_get.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/rebuild_docs_and_check.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/render_page.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/render_plot.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/render_tags.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/script_from_js_tpl.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/send_page.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/send_tags.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/style_from_css_tpl.html</loc></url>
 </urlset>
+

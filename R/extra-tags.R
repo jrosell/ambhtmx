@@ -1,5 +1,5 @@
 
-#' Create HTML tags
+#' Create HTML tags without requiring htmltools::tags$
 #'
 #' Create an R object that represents an HTML tag. For convenience, common HTML
 #' tags (e.g., `<div>`) can be created by calling for their tag name directly
@@ -118,7 +118,7 @@ style_tpl_css_vars_replace <- \(content, ...){
 #' @param ... mutiple named arguments with the value to replace
 #' @examples
 #' if (FALSE){
-#'   # replaces "{init}" to "0"
+#'   # replaces {init} to 0
 #'   script_from_js_tpl("script.js", init = "init")
 #' }
 #' @export

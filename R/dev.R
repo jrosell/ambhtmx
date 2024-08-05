@@ -12,6 +12,8 @@ is_debug_enabled <- \() TRUE
 #' @keywords internal
 #' @noRd
 rebuild_docs_and_check <- function() {
+  devtools::load_all()
+  devtools::test(stop_on_failure  = TRUE)
   previous_version <- "0.0.0.9002"
   usethis::use_description(list(
       "Title" = "ambhtmx",
@@ -29,14 +31,15 @@ rebuild_docs_and_check <- function() {
   usethis::use_cc0_license()
   suggests_packages <- c(
       "pak",
-      "pkgdown",
+      "pkgdown (>= 2.1.0)",
       "devtools",
       "usethis",
       "ggplot2",
       "zeallot",
       "withr",
       "testthat",
-      "dbplyr"
+      "dbplyr",
+      "here"
   )
   suggests_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Suggests"); x} 
@@ -74,13 +77,20 @@ rebuild_docs_and_check <- function() {
   )
   usethis::use_dev_package("uwu", remote = "JosiahParry/uwu", type = "Imports")
 
+  write(
+    "URL: https://jrosell.github.io/ambhtmx, https://github.com/jrosell/ambhtmx",
+    file = "DESCRIPTION",
+    append = TRUE
+  )
+
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
   # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)
-  devtools::load_all()
-  usethis::use_namespace()
+  usethis::use_namespace()  
   devtools::document()
-  pkgdown::build_site()
+  pkgdown::build_site(preview = FALSE)
+  utils::browseURL(here::here("docs", "index.html"), browser = "firefox")
   devtools::check()
+  devtools::load_all()
   # usethis::use_version(which = "dev", push = FALSE)
 }

@@ -1,4 +1,4 @@
-#' Generate a card component
+#' Generate component
 #' 
 #' @rdname component
 #' @param ... htmlobjects to add
@@ -30,8 +30,6 @@ amb_card <- \(
   )
 }
 
-#' Generate a input text with its label
-#' 
 #' @rdname component
 #' @param ... htmlobjects to add
 #' @param id for the label and the input
@@ -70,8 +68,6 @@ amb_input_text <- \(
   )
 }
 
-#' Generate a input text
-#' 
 #' @rdname component
 #' @param ... htmlobjects to add
 #' @param class customize

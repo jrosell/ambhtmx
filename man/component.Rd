@@ -4,7 +4,7 @@
 \alias{amb_card}
 \alias{amb_input_text}
 \alias{amb_button}
-\title{Generate a card component}
+\title{Generate component}
 \usage{
 amb_card(
   ...,
@@ -49,9 +49,5 @@ amb_button(..., class = "rounded-1", type = "button")
 \item{type}{customize}
 }
 \description{
-Generate a card component
-
-Generate a input text with its label
-
-Generate a input text
+Generate component
 }

@@ -14,3 +14,9 @@ script_from_js_tpl(file, ...)
 \description{
 Generate script from js template
 }
+\examples{
+if (FALSE){
+  # replaces {init} to 0
+  script_from_js_tpl("script.js", init = "init")
+}
+}

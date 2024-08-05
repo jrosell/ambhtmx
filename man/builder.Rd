@@ -13,7 +13,7 @@
 \alias{form}
 \alias{style}
 \alias{script}
-\title{Create HTML tags}
+\title{Create HTML tags without requiring htmltools::tags$}
 \usage{
 button(..., .noWS = NULL, .renderHook = NULL)
 

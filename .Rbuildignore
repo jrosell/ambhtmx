@@ -10,3 +10,6 @@ package-lock.json
 package.json
 .sesskey
 __pycache__
+^.*\.Rproj$
+^\.Rproj\.user$
+_pkgdown.yml

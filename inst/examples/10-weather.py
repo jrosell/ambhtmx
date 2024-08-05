@@ -17,3 +17,4 @@ app,rt = fast_app()
 def get(): return weather_table()
 
 serve()
+	

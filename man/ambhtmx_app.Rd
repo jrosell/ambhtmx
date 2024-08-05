@@ -41,3 +41,4 @@ A list with the ambiorix app, the running context and the model methods.
 \description{
 Creating an ambiorix + htmx app
 }
+\keyword{ambhtmx}

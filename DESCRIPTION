@@ -16,8 +16,9 @@ Suggests:
     dbplyr,
     devtools,
     ggplot2,
+    here,
     pak,
-    pkgdown,
+    pkgdown (>= 2.1.0),
     scilis (>= 0.0.0.9000),
     signaculum (>= 0.0.0.9000),
     testthat,
@@ -44,3 +45,4 @@ Remotes:
     devOpifex/scilis,
     devOpifex/signaculum,
     JosiahParry/uwu
+URL: https://jrosell.github.io/ambhtmx, https://github.com/jrosell/ambhtmx

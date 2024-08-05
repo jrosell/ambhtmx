@@ -78,15 +78,21 @@ AMBHTMX_PORT=<to change port default 3000>
 
 ### [Customizable web components: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
-* [Python implementation from fastht.ml](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py), Design credit: https://codepen.io/markmiro/pen/wbqMPa
-[![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py)
+
+* [Python implementation](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py) ([Screenshot](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
 
 
-## Deployment examples (WIP)
+## Deployment examples
 
 If you create a Dockerfile you can deploy your ambhtmx app to HuggingFace Spaces, Digital Ocean, Google Cloud, etc.
 
-I created the ambhtmx.crud repo for the CRUD example on [Github](https://github.com/jrosell/ambhtmx.crud) and [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.crud).
+I deployed some examples:
+
+* [ambhtmx.crud](https://github.com/jrosell/ambhtmx.crud) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.crud))
+* [ambhtmx.card3d](https://github.com/jrosell/ambhtmx.card3d) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.card3d))
+
+
+If you want to deploy yours, when creating your user and space in HuggingFace Spaces for your repo, select a blank Dockerfile:
 
 ![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png)
 
@@ -96,6 +102,6 @@ I created the ambhtmx.crud repo for the CRUD example on [Github](https://github.
 Known issues:
 
 * Are you trying to autenticate from 0.0.0.0 host? Cookies don't work from 0.0.0.0 host, try 127.0.0.1 or a domain name instead (/etc/hosts or DNS).
-* Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again.
+* Are you trying an app without including all the required packages in the Dockerfile? Please, check the logs and edit the Dockerfile and try again. It could be that Github API have reach the limit. You need to [configure the environment variable GITHUB_PAT](https://remotes.r-lib.org/reference/install_github.html).
 
 Another issue? Please, [let me know](https://github.com/jrosell/ambhtmx/issues).
