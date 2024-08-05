@@ -1,6 +1,7 @@
 #' Generate component
 #' 
-#' @rdname component
+#' @keywords components
+#' @rdname components
 #' @param ... htmlobjects to add
 #' @param class to add more classes to the card
 #' @param title to customeize the title text
@@ -30,7 +31,7 @@ amb_card <- \(
   )
 }
 
-#' @rdname component
+#' @rdname components
 #' @param ... htmlobjects to add
 #' @param id for the label and the input
 #' @param label customize
@@ -68,7 +69,7 @@ amb_input_text <- \(
   )
 }
 
-#' @rdname component
+#' @rdname components
 #' @param ... htmlobjects to add
 #' @param class customize
 #' @param type customize

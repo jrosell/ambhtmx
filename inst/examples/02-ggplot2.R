@@ -1,10 +1,11 @@
-library(ambhtmx) 
+# devtools::load_all()
+library(ambhtmx)
 library(ggplot2)
 
 #' Starting the app
 counter <- 0
 rexp_data <- rexp(1)
-c(app, context, operations) %<-% ambhtmx_app()
+c(app, context, operations) %<-% ambhtmx()
 
 #' Main page of the app
 app$get("/", \(req, res){

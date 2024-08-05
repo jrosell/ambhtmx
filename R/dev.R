@@ -36,10 +36,10 @@ rebuild_docs_and_check <- function() {
       "usethis",
       "ggplot2",
       "zeallot",
-      "withr",
       "testthat",
       "dbplyr",
-      "here"
+      "here",
+      "plotly"
   )
   suggests_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Suggests"); x} 
@@ -57,7 +57,9 @@ rebuild_docs_and_check <- function() {
       "RSQLite",
       "pool",
       "readr",
-      "uwu"
+      "uwu",
+      "withr",
+      "htmlwidgets"
   )
   imports_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Imports"); x}
@@ -78,7 +80,7 @@ rebuild_docs_and_check <- function() {
   usethis::use_dev_package("uwu", remote = "JosiahParry/uwu", type = "Imports")
 
   write(
-    "URL: https://jrosell.github.io/ambhtmx, https://github.com/jrosell/ambhtmx",
+    "URL: https://jrosell.github.io/ambhtmx, https://github.com/jrosell/ambhtmx\nBugReports: https://github.com/jrosell/ambhtmx/issues",
     file = "DESCRIPTION",
     append = TRUE
   )

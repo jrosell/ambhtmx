@@ -2,3 +2,44 @@ url: https://jrosell.github.io/ambhtmx
 
 template:
   bootstrap: 5
+
+
+home:
+  links:
+  - text: ambiorix reference
+    href: https://ambiorix.dev/docs/ambiorix
+  - text: htmltools reference
+    href: https://rstudio.github.io/htmltools/reference/index.html
+  - text: htmx reference
+    href: https://htmx.org/reference/
+  
+
+reference:
+
+- title: Main ambhtmx functions  
+  contents:
+  - has_keyword("ambhtmx")
+
+- title: Authentication functions
+  desc: >
+    Some functions to help process login, logout and authentication.
+  contents:
+  - has_keyword("auth")
+
+- title: Components
+  desc: >
+    More tags and and tools to build new components and pages.
+  contents:
+  - has_keyword("components")
+
+- title: Rendering
+  desc: >
+    Some functions to help rendering and processing tags and pages.
+  contents:
+  - has_keyword("rendering")
+
+
+development:
+  mode: auto
+
+

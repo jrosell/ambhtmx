@@ -1,8 +1,8 @@
 # TODO: Use websockets to refresh the HTML page when R server is restarted.
 # TODO: Detect if the script is run from nodemon or not.
 
-library(ambhtmx) 
 # devtools::load_all()
+library(ambhtmx) 
 
 
 live_path <- tryCatch(
@@ -10,10 +10,9 @@ live_path <- tryCatch(
   error = function(e) return("")
 )
 
-
 #' Starting the app
 counter <- 0
-c(app, context, operations) %<-% ambhtmx_app(live = live_path)
+c(app, context, operations) %<-% ambhtmx(live = live_path)
 
 
 #' Main page of the app

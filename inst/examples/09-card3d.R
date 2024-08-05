@@ -1,5 +1,6 @@
-library(ambhtmx)
 # devtools::load_all()
+library(ambhtmx)
+
 
 card_3d_demo <- \() {  
   # Original python code credit: https://fastht.ml/
@@ -20,10 +21,7 @@ card_3d_demo <- \() {
   div(card, style = card_styles)
 }
 
-app <- ambhtmx_app()$app
-
-app$get("/", \(req, res) {
-  card_3d_demo() |> send_page(res)
-})
-
-app$start()
+ambhtmx()$app$get("/", \(req, res) {
+    card_3d_demo() |> send_page(res)
+  })$
+  start()

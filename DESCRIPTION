@@ -19,11 +19,11 @@ Suggests:
     here,
     pak,
     pkgdown (>= 2.1.0),
+    plotly,
     scilis (>= 0.0.0.9000),
     signaculum (>= 0.0.0.9000),
     testthat,
     usethis,
-    withr,
     zeallot
 Imports: 
     ambiorix (>= 2.1.0),
@@ -32,6 +32,7 @@ Imports:
     dplyr,
     glue,
     htmltools,
+    htmlwidgets,
     pool,
     purrr,
     readr,
@@ -39,10 +40,12 @@ Imports:
     RSQLite,
     stringr,
     tibble,
-    uwu (>= 0.0.0.9000)
+    uwu (>= 0.0.0.9000),
+    withr
 Remotes:  
     devOpifex/ambiorix,
     devOpifex/scilis,
     devOpifex/signaculum,
     JosiahParry/uwu
 URL: https://jrosell.github.io/ambhtmx, https://github.com/jrosell/ambhtmx
+BugReports: https://github.com/jrosell/ambhtmx/issues

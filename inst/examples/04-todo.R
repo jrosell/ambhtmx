@@ -1,9 +1,9 @@
-library(ambhtmx) 
 # devtools::load_all()
+library(ambhtmx) 
 
 #' Starting the app
 counter <- 0
-c(app, context, operations) %<-% ambhtmx_app("todo.sqlite", value = tibble(
+c(app, context, operations) %<-% ambhtmx("todo.sqlite", value = tibble(
   id = character(1), item = character(1), status = integer(1)
 ))
 data_add <- operations$add_row

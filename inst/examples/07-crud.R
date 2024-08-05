@@ -1,7 +1,20 @@
-library(ambhtmx)
 # devtools::load_all() 
+library(ambhtmx)
+
 
 page_title <- "Password protected CRUD (Create, Read, Update, and Delete) example with ambhtmx"
+
+#' Starting the app
+counter <- 0
+c(app, context, items) %<-%
+  ambhtmx(
+    "items.sqlite",
+    value = tibble(
+      id = character(1),
+      name = character(1),
+      content = character(1)
+    )
+  )
 
 render_index <- \() {
   main <- NULL
@@ -81,20 +94,6 @@ render_row <- \(item) {
   )
 }
 
-#' Starting the app
-counter <- 0
-c(app, context, items) %<-%
-  ambhtmx_app(
-    "items.sqlite",
-    value = tibble(
-      id = character(1),
-      name = character(1),
-      content = character(1)
-    ),
-    render_index = render_index,
-    render_row = render_row
-  )
-
 #' Authentication feature with secret cookies and .Renviron variables
 app$get("/login", \(req, res) {
   process_login_get(req, res)
@@ -153,7 +152,7 @@ app$get("/", \(req, res){
   tryCatch({
       html <- render_page(
           page_title = page_title,
-          main = items$render_index()
+          main = render_index()
       )
     },
     error = \(e) print(e)
@@ -166,7 +165,7 @@ app$get("/items", \(req, res){
   if (!req$loggedin) {    
     return(res$redirect("/login", status = 302L))
   }
-  res$send(items$render_index())
+  res$send(render_index())
 })
 
 #' New item form
@@ -192,7 +191,7 @@ app$get("/items/:id", \(req, res){
   item <- items$read_row(id = item_id)   
   html <- render_tags(tagList(
     h2("Show item details"),
-    items$render_row(item),
+    render_row(item),
     a(
       "Go back",
       href = "/",
@@ -286,7 +285,7 @@ app$post("/items", \(req, res){
     }, 
     error = \(e) print(e)
   )    
-  res$send(items$render_index())
+  res$send(render_index())
 })
 
 #' Update an existing item
@@ -306,7 +305,7 @@ app$put("/items/:id", \(req, res){
     }, 
     error = \(e) print(e)
   )
-  res$send(items$render_index())
+  res$send(render_index())
 })
 
 #' Delete an existing item
@@ -316,7 +315,7 @@ app$delete("/items/:id", \(req, res){
   }
   item_id <- req$params$id %||% ""  
   items$delete_row(id = item_id)
-  res$send(items$render_index())
+  res$send(render_index())
 })
 
 #' Start the app with all the previous defined routes

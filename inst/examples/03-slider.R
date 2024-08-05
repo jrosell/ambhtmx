@@ -1,11 +1,11 @@
-library(ambhtmx)
 # devtools::load_all()
+library(ambhtmx)
 library(ggplot2)
 
 #' Starting the app
 counter <- 1
 rexp_data <- c(rexp(1), rexp(1))
-c(app, context, operations) %<-% ambhtmx_app()
+c(app, context, operations) %<-% ambhtmx()
 
 #' Generate a plot from rexp_data
 generate_plot <- \(){
@@ -22,7 +22,7 @@ app$get("/", \(req, res){
       div(
         id = "counter",
         p(glue("Counter is set to {counter}")),
-        render_plot(rexp_plot)
+        render_png(rexp_plot)
       ),
       button(
         "+1",
@@ -53,7 +53,7 @@ app$post("/increment", \(req, res){
   rexp_plot <- generate_plot()
   tagList(
       p(glue("Counter is set to {counter}")),
-      render_plot(rexp_plot)
+      render_png(rexp_plot)
     ) |> 
     send_tags(res)
 })
@@ -67,7 +67,7 @@ app$post("/increment_slider", \(req, res){
   rexp_plot <- generate_plot()
   tagList(
       p(glue("Counter is set to {counter}")),
-      render_plot(rexp_plot)
+      render_png(rexp_plot)
     ) |> 
     send_tags(res)
 })

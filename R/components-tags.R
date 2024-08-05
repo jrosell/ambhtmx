@@ -7,7 +7,7 @@
 #' `<article>`), use the `tags` list collection (e.g., `tags$article()`). To
 #' create other non HTML/SVG tags, use the lower-level `tag()` constructor.
 #'
-#' @name builder
+#' @name tags
 #' @param ... Tag attributes (named arguments) and children (unnamed arguments).
 #'   A named argument with an `NA` value is rendered as a boolean attributes
 #'   (see example). Children may include any combination of:
@@ -27,52 +27,54 @@
 #' @return A `list()` with a `shiny.tag` class that can be converted into an
 #'   HTML string via `as.character()` and saved to a file with `save_html()`.
 #' 
-#' @rdname builder
+#' @rdname tags
+#' @keywords components
 #' @export
 button <- htmltools::tags$button
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 textarea <- htmltools::tags$textarea
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 input <- htmltools::tags$input
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 label <- htmltools::tags$label
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 nav <- htmltools::tags$nav
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 li <- htmltools::tags$li
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 ul <- htmltools::tags$ul
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 ol <- htmltools::tags$ol
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 form <- htmltools::tags$form
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 style <- htmltools::tags$style
 
-#' @rdname builder
+#' @rdname tags
 #' @export
 script <- htmltools::tags$script
 
 #' Generate style from css template
 #' 
+#' @keywords components
 #' @rdname style_from_css_tpl
 #' @param file path to a js file
 #' @param ... mutiple named arguments with the value to replaces
@@ -113,6 +115,7 @@ style_tpl_css_vars_replace <- \(content, ...){
 
 #' Generate script from js template
 #' 
+#' @keywords components
 #' @rdname script_from_js_tpl
 #' @param file path to a js file
 #' @param ... mutiple named arguments with the value to replace

@@ -1,11 +1,11 @@
 # remotes::install_github("jrosell/ambhtmx", force = TRUE)
-library(ambhtmx)
 # devtools::load_all()
+library(ambhtmx)
 
 #' Starting the app
 counter <- 0
 tryCatch({
-    c(app, context, operations) %<-% ambhtmx_app()
+    c(app, context, operations) %<-% ambhtmx()
   },
   error = \(e) print(e)
 )

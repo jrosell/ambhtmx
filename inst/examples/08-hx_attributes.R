@@ -1,7 +1,7 @@
-library(ambhtmx) 
 # devtools::load_all()
+library(ambhtmx) 
 
-app <- ambhtmx_app()$app
+app <- ambhtmx()$app
 
 app$get("/", \(req, res) {
   div(

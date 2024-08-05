@@ -1,7 +1,7 @@
 
 #' Render a custom page with a custom title and main content
 #' 
-#' @keywords render
+#' @keywords rendering
 #' @param main htmltools object of the body of the html page
 #' @param page_title the title tag contents of the page
 #' @param head_tags optional htmltools object of the head of the html page
@@ -62,7 +62,7 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
 
 #' Render a page and send the respose
 #' 
-#' @keywords render
+#' @keywords rendering
 #' @param res response object
 #' @param main htmltools object of the body of the html page
 #' @param ... other paramters to the render page function
@@ -81,7 +81,7 @@ send_page <- \(main = NULL, res, ...) {
 
 #' Render a custom page with a custom title and main content
 #' 
-#' @keywords render
+#' @keywords rendering
 #' @param main htmltools object to render
 #' @param res response object
 #' @param ... htmltools object to render
@@ -100,6 +100,30 @@ send_tags <- \(main = NULL, res, ...) {
   )
   res$send(html)
 }
+
+
+#' Render tags to character vector
+#' 
+#' @keywords rendering
+#' @param ... one or more htmltools objects.
+#' @returns a character representation of input
+#' @export
+render_tags <- \(...) {
+  as.character(htmltools::tagList(...))
+}
+
+#' Render a png image to a img tag
+#' 
+#' @keywords rendering
+#' @param p a ggplot or another object that can be printed and captured as a png image
+#' @returns img htmltools tag with a data encoded src attribute
+#' @export
+render_png <- \(p){
+  grDevices::png(p_file <- tempfile(fileext = ".png")); print(p); grDevices::dev.off()
+  p_txt <- b64::encode_file(p_file)
+  tags$img(src = glue::glue("data:image/png;base64,{p_txt}"))
+}
+
 
 #' @noRd
 replace_hx_attrs <- function(x) {
@@ -185,24 +209,3 @@ render_html <- \(htmx_tags){
   return(paste0(html, collapse = ""))
 }
 
-
-#' Render tags to character vector
-#' 
-#' @keywords render
-#' @param ... one or more htmltools objects.
-#' @returns a character representation of input
-#' @export
-render_tags <- \(...) {
-  as.character(htmltools::tagList(...))
-}
-
-#' Render imatge or ggplot to image tag
-#' 
-#' @param p a ggplot or another object that can be printed and captured as a png image
-#' @returns img htmltools tag with a data encoded src attribute
-#' @export
-render_plot <- \(p){
-  grDevices::png(p_file <- tempfile(fileext = ".png")); print(p); grDevices::dev.off()
-  p_txt <- b64::encode_file(p_file)
-  tags$img(src = glue::glue("data:image/png;base64,{p_txt}"))
-}

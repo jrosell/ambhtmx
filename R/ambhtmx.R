@@ -12,7 +12,7 @@
 #' @param render_row function to be stored as a model method (optional)
 #' @returns A list with the ambiorix app, the running context and the model methods.
 #' @export
-ambhtmx_app <- \(
+ambhtmx <- \(
       dbname = NULL, 
       value = tibble::tibble(), 
       protocol = NULL,

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ambhtmx</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="main-ambhtmx-functions">Main ambhtmx functions<a class="anchor" aria-label="anchor" href="#main-ambhtmx-functions"></a></h2>
 
 
 
@@ -43,23 +43,22 @@
 
       <dl><dt>
 
-          <code><a href="ambhtmx_app.html">ambhtmx_app()</a></code>
+          <code><a href="ambhtmx.html">ambhtmx()</a></code>
 
         </dt>
         <dd>Creating an ambiorix + htmx app</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="authentication-functions">Authentication functions<a class="anchor" aria-label="anchor" href="#authentication-functions"></a></h2>
 
-          <code><a href="builder.html">button()</a></code> <code><a href="builder.html">textarea()</a></code> <code><a href="builder.html">input()</a></code> <code><a href="builder.html">label()</a></code> <code><a href="builder.html">nav()</a></code> <code><a href="builder.html">li()</a></code> <code><a href="builder.html">ul()</a></code> <code><a href="builder.html">ol()</a></code> <code><a href="builder.html">form()</a></code> <code><a href="builder.html">style()</a></code> <code><a href="builder.html">script()</a></code>
+      <div class="section-desc"><p>Some functions to help process login, logout and authentication.</p></div>
 
-        </dt>
-        <dd>Create HTML tags without requiring htmltools::tags$</dd>
-      </dl><dl><dt>
 
-          <code><a href="component.html">amb_card()</a></code> <code><a href="component.html">amb_input_text()</a></code> <code><a href="component.html">amb_button()</a></code>
+    </div><div class="section level2">
 
-        </dt>
-        <dd>Generate component</dd>
-      </dl><dl><dt>
+
+
+
+      <dl><dt>
 
           <code><a href="process_error_get.html">process_error_get()</a></code>
 
@@ -89,7 +88,53 @@
 
         </dt>
         <dd>Process logout requests</dd>
+      </dl></div><div class="section level2">
+      <h2 id="components">Components<a class="anchor" aria-label="anchor" href="#components"></a></h2>
+
+      <div class="section-desc"><p>More tags and and tools to build new components and pages.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="components.html">amb_card()</a></code> <code><a href="components.html">amb_input_text()</a></code> <code><a href="components.html">amb_button()</a></code>
+
+        </dt>
+        <dd>Generate component</dd>
       </dl><dl><dt>
+
+          <code><a href="script_from_js_tpl.html">script_from_js_tpl()</a></code>
+
+        </dt>
+        <dd>Generate script from js template</dd>
+      </dl><dl><dt>
+
+          <code><a href="style_from_css_tpl.html">style_from_css_tpl()</a></code>
+
+        </dt>
+        <dd>Generate style from css template</dd>
+      </dl><dl><dt>
+
+          <code><a href="tags.html">button()</a></code> <code><a href="tags.html">textarea()</a></code> <code><a href="tags.html">input()</a></code> <code><a href="tags.html">label()</a></code> <code><a href="tags.html">nav()</a></code> <code><a href="tags.html">li()</a></code> <code><a href="tags.html">ul()</a></code> <code><a href="tags.html">ol()</a></code> <code><a href="tags.html">form()</a></code> <code><a href="tags.html">style()</a></code> <code><a href="tags.html">script()</a></code>
+
+        </dt>
+        <dd>Create HTML tags without requiring htmltools::tags$</dd>
+      </dl></div><div class="section level2">
+      <h2 id="rendering">Rendering<a class="anchor" aria-label="anchor" href="#rendering"></a></h2>
+
+      <div class="section-desc"><p>Some functions to help rendering and processing tags and pages.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="render_page.html">render_page()</a></code>
 
@@ -97,22 +142,16 @@
         <dd>Render a custom page with a custom title and main content</dd>
       </dl><dl><dt>
 
-          <code><a href="render_plot.html">render_plot()</a></code>
+          <code><a href="render_png.html">render_png()</a></code>
 
         </dt>
-        <dd>Render imatge or ggplot to image tag</dd>
+        <dd>Render a png image to a img tag</dd>
       </dl><dl><dt>
 
           <code><a href="render_tags.html">render_tags()</a></code>
 
         </dt>
         <dd>Render tags to character vector</dd>
-      </dl><dl><dt>
-
-          <code><a href="script_from_js_tpl.html">script_from_js_tpl()</a></code>
-
-        </dt>
-        <dd>Generate script from js template</dd>
       </dl><dl><dt>
 
           <code><a href="send_page.html">send_page()</a></code>
@@ -125,14 +164,9 @@
 
         </dt>
         <dd>Render a custom page with a custom title and main content</dd>
-      </dl><dl><dt>
-
-          <code><a href="style_from_css_tpl.html">style_from_css_tpl()</a></code>
-
-        </dt>
-        <dd>Generate style from css template</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

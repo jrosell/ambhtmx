@@ -1,5 +1,5 @@
-library(ambhtmx) 
 # devtools::load_all()
+library(ambhtmx) 
 library(ggplot2)
 
 page_title <- "ambhtmx basic authentication example"
@@ -10,7 +10,7 @@ live_path <- tryCatch(
 )
 
 #' Starting the app
-c(app, context, operations) %<-% ambhtmx_app()
+c(app, context, operations) %<-% ambhtmx()
 
 #' Authentication feature with secret cookies and .Renviron variables
 app$get("/login", \(req, res) {
@@ -57,7 +57,7 @@ app$get("/", \(req, res){
       h1(hello),
       div(id = "counter", 
           p(glue("Counter is set to {counter}")),
-          render_plot(rexp_plot)
+          render_png(rexp_plot)
       ),
       button(
         "+1",
@@ -74,7 +74,7 @@ app$post("/increment", \(req, res){
   rexp_plot <- generate_plot()
   res$send(render_tags(
     tags$p(glue("Counter is set to {counter}")),
-    render_plot(rexp_plot)
+    render_png(rexp_plot)
   ))
 })
 

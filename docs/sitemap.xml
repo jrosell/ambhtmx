@@ -3,9 +3,11 @@
 <url><loc>https://jrosell.github.io/ambhtmx/LICENSE.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/authors.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/index.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/ambhtmx.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/ambhtmx_app.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/builder.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/component.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/components.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/index.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/process_error_get.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/process_error_post.html</loc></url>
@@ -17,10 +19,12 @@
 <url><loc>https://jrosell.github.io/ambhtmx/reference/rebuild_docs_and_check.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/render_page.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/render_plot.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/render_png.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/render_tags.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/script_from_js_tpl.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/send_page.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/send_tags.html</loc></url>
 <url><loc>https://jrosell.github.io/ambhtmx/reference/style_from_css_tpl.html</loc></url>
+<url><loc>https://jrosell.github.io/ambhtmx/reference/tags.html</loc></url>
 </urlset>
 
