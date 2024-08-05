@@ -255,6 +255,7 @@ ambhtmx_app <- \(
 #' @param page_title the title tag contents of the page
 #' @param head_tags optional htmltools object of the head of the html page
 #' @returns the rendered html of the full html page with dependencies
+#' @details It can throw exceptions, so handling exceptions is recommended, if not a must.
 #' @export
 render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
   penv <- rlang::env_parent()
@@ -315,8 +316,14 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
 #' @param main htmltools object of the body of the html page
 #' @param ... other paramters to the render page function
 #' @export
-send_page <- \(main, res, ...) {  
-  html <- render_page(main = main, ...)
+send_page <- \(main, res, ...) {
+  html <- "Sorry. The system can't render the page as expected."
+  tryCatch(
+    expr = {
+      html <- render_page(main = main, ...)
+    },
+    error = \(e) print(e)
+  )
   res$send(html)
 }
 
