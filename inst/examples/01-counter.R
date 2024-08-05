@@ -1,5 +1,6 @@
+# remotes::install_github("jrosell/ambhtmx", force = TRUE)
 library(ambhtmx)
-# devtools::load_all(); remotes::install_github("jrosell/ambhtmx", force = TRUE)
+# devtools::load_all()
 
 #' Starting the app
 counter <- 0

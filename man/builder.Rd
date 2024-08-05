@@ -11,6 +11,8 @@
 \alias{ul}
 \alias{ol}
 \alias{form}
+\alias{style}
+\alias{script}
 \title{Create HTML tags}
 \usage{
 button(..., .noWS = NULL, .renderHook = NULL)
@@ -30,6 +32,10 @@ ul(..., .noWS = NULL, .renderHook = NULL)
 ol(..., .noWS = NULL, .renderHook = NULL)
 
 form(..., .noWS = NULL, .renderHook = NULL)
+
+style(..., .noWS = NULL, .renderHook = NULL)
+
+script(..., .noWS = NULL, .renderHook = NULL)
 }
 \arguments{
 \item{...}{Tag attributes (named arguments) and children (unnamed arguments).

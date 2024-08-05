@@ -13,24 +13,27 @@ RoxygenNote: 7.3.1.9000
 Depends: 
     R (>= 4.4)
 Suggests: 
+    dbplyr,
     devtools,
     ggplot2,
     pak,
     pkgdown,
     scilis (>= 0.0.0.9000),
     signaculum (>= 0.0.0.9000),
+    testthat,
     usethis,
+    withr,
     zeallot
 Imports: 
     ambiorix (>= 2.1.0),
     b64,
     DBI,
-    dbplyr,
     dplyr,
     glue,
     htmltools,
     pool,
     purrr,
+    readr,
     rlang,
     RSQLite,
     stringr,

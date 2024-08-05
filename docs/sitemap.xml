@@ -55,6 +55,12 @@
     <loc>/reference/render_tags.html</loc>
   </url>
   <url>
+    <loc>/reference/script_from_js_tpl.html</loc>
+  </url>
+  <url>
     <loc>/reference/send_page.html</loc>
+  </url>
+  <url>
+    <loc>/reference/style_from_css_tpl.html</loc>
   </url>
 </urlset>

@@ -71,8 +71,16 @@ AMBHTMX_PORT=<to change port default 3000>
 ### [Password protected CRUD (Create, Read, Update, and Delete) example with ambhtmx](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/07.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-crud.R)
 
-### [Cleaner and shorter code hx_ to hx- replacement](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/07-hx_attributes.R)
+
+### [Cleaner and shorter code hx_ to hx- replacement](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
 [![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/08.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
+
+
+### [Customizable web components: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
+[![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
+* [Python implementation from fastht.ml](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py), Design credit: https://codepen.io/markmiro/pen/wbqMPa
+[![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py)
+
 
 ## Deployment examples (WIP)
 

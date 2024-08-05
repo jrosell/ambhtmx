@@ -4,12 +4,14 @@
 \alias{render_page}
 \title{Render a custom page with a custom title and main content}
 \usage{
-render_page(main = NULL, page_title = NULL)
+render_page(main = NULL, page_title = NULL, head_tags = NULL)
 }
 \arguments{
 \item{main}{htmltools object of the body of the html page}
 
 \item{page_title}{the title tag contents of the page}
+
+\item{head_tags}{optional htmltools object of the head of the html page}
 }
 \value{
 the rendered html of the full html page with dependencies

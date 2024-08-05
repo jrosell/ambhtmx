@@ -62,3 +62,91 @@ ol <- htmltools::tags$ol
 #' @rdname builder
 #' @export
 form <- htmltools::tags$form
+
+#' @rdname builder
+#' @export
+style <- htmltools::tags$style
+
+#' @rdname builder
+#' @export
+script <- htmltools::tags$script
+
+#' Generate style from css template
+#' 
+#' @rdname style_from_css_tpl
+#' @param file path to a js file
+#' @param ... mutiple named arguments with the value to replaces
+#' @examples
+#' if (FALSE){
+#'   # replaces "var(--tpl-background)" to "red"
+#'   style_from_css_tpl("styles.css", background = "red")
+#' }
+#' @export
+style_from_css_tpl <- \(file, ...) {
+  html <- ""
+  raw_content <- readr::read_file(file)
+  content <- style_tpl_css_vars_replace(raw_content, ...)
+  tryCatch(
+    expr = {
+      html <- htmltools::HTML("<style>", content, "</style>")
+    },
+    error = \(e) {
+      print(e)
+    }
+  )
+  return(html)
+}
+
+
+#' @noRd
+style_tpl_css_vars_replace <- \(content, ...){
+  props <- rlang::dots_list(...)    
+  values <- paste0(props)
+  if(length(values) == 0) {
+    return(content)
+  }  
+  tpls <- paste0("var(--tpl-", names(props), ")")    
+  names(values) <- tpls
+  stringr::str_replace_all(content, stringr::fixed(values))
+}
+
+
+#' Generate script from js template
+#' 
+#' @rdname script_from_js_tpl
+#' @param file path to a js file
+#' @param ... mutiple named arguments with the value to replace
+#' @examples
+#' if (FALSE){
+#'   # replaces "{init}" to "0"
+#'   script_from_js_tpl("script.js", init = "init")
+#' }
+#' @export
+script_from_js_tpl <- \(file, ...) {
+  html <- ""
+  raw_content <- readr::read_file(file)
+  content <- script_tpl_js_vars_replace(raw_content, ...)
+  tryCatch(
+    expr = {
+      html <- htmltools::HTML("<script>", content, "</script>")
+    },
+    error = \(e) {
+      print(e)
+    }
+  )
+  return(html)
+}
+
+
+#' @noRd
+script_tpl_js_vars_replace <- \(content, ...){
+  props <- rlang::dots_list(...)    
+  values <- paste0(props)
+  if(length(values) == 0) {
+    return(content)
+  }  
+  tpls <- paste0("{", names(props), "}")
+  names(values) <- tpls
+  stringr::str_replace_all(content, stringr::fixed(values))
+}
+

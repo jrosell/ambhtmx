@@ -249,29 +249,56 @@ ambhtmx_app <- \(
 #' 
 #' @param main htmltools object of the body of the html page
 #' @param page_title the title tag contents of the page
+#' @param head_tags optional htmltools object of the head of the html page
 #' @returns the rendered html of the full html page with dependencies
 #' @export
-render_page <- \(main = NULL, page_title = NULL) {
-  if (is.null(page_title)){
-    penv <- rlang::env_parent()
+render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
+  penv <- rlang::env_parent()
+  genv <- rlang::global_env()
+  if (is.null(page_title)){    
     page_title <- penv[["page_title"]]
   }
-  if (is.null(main)){
-    penv <- rlang::env_parent()
+  if (is.null(page_title)){    
+    page_title <- genv[["page_title"]]
+  }
+  if (is.null(page_title)){    
+    page_title <- "ambhtmx"
+  }
+  if (is.null(main)){    
     main <- penv[["main"]]
   }
-  html_tags <- htmltools::tagList(
-    tags$head(
-      tags$title(page_title),
-      tags$style("body {background-color:white;}"),
+  if (is.null(main)){    
+    main <- genv[["main"]]
+  }
+  if (is.null(head_tags)){    
+    head_tags <- penv[["head_tags"]]
+  }
+  if (is.null(head_tags)){    
+    head_tags <- genv[["head_tags"]]
+  }
+  if (is.null(head_tags)) {
+    head_tags <- htmltools::tagList(      
       tags$link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css", rel = "stylesheet", integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH",  crossorigin="anonymous"),
       tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin="anonymous"),
-      tags$script(src = "https://unpkg.com/htmx.org@2.0.1")
-    ),
-    tags$body(
-      `hx-encoding` = "multipart/form-data",
-      main
-    ) 
+      htmltools::HTML('<script src="https://cdn.jsdelivr.net/gh/gnat/surreal@main/surreal.js"></script><script src="https://cdn.jsdelivr.net/gh/gnat/css-scope-inline@main/script.js"></script>')
+    )
+  }
+  tryCatch(
+    expr = {
+      html_tags <- htmltools::tagList(
+        tags$head(
+          tags$title(page_title),
+          tags$style("body {background-color:white;}"),
+          tags$script(src = "https://unpkg.com/htmx.org@2.0.1"),
+          head_tags,      
+        ),
+        tags$body(
+          `hx-encoding` = "multipart/form-data",
+          main
+        ) 
+      )
+    },
+    error = \(e) print(e)
   )
   render_html(html_tags) 
 }
@@ -304,6 +331,24 @@ replace_hx_attrs <- function(x) {
   
   return(x)
 }
+
+#' @noRd
+replace_css_var_attrs <- function(x) {
+  if (is.list(x)) {
+    # Check if the element has a named list called 'attribs'
+    if ("attribs" %in% names(x)) {
+      # Replace 'hx_' with 'hx-' in attribute names
+      names(x$attribs) <- gsub("hx_", "hx-", names(x$attribs))
+    }
+    
+    # Apply the function recursively to all elements of the list
+    original_class <- class(x)
+    x <- lapply(x, replace_hx_attrs)
+    class(x) <- original_class
+  }
+  return(x)
+}
+
 
 #' @noRd
 replace_hx_attrs <- function(x) {

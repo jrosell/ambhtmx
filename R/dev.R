@@ -33,7 +33,10 @@ rebuild_docs_and_check <- function() {
       "devtools",
       "usethis",
       "ggplot2",
-      "zeallot"      
+      "zeallot",
+      "withr",
+      "testthat",
+      "dbplyr"
   )
   suggests_packages |> purrr::map(
       \(x){usethis::use_package(x, type = "Suggests"); x} 
@@ -49,8 +52,8 @@ rebuild_docs_and_check <- function() {
       "stringr",
       "DBI",
       "RSQLite",
-      "dbplyr",
       "pool",
+      "readr",
       "uwu"
   )
   imports_packages |> purrr::map(

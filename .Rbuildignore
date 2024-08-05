@@ -8,3 +8,5 @@ docs/
 nodemon.json
 package-lock.json
 package.json
+.sesskey
+__pycache__
