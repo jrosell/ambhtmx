@@ -27,15 +27,19 @@ ambhtmx_app <- \(
   pool <- NULL
   data <- NULL
   name <- NULL
-  if(is.null(Sys.getenv("AMBHTMX_HOST")) || 
-        is.null(Sys.getenv("AMBHTMX_PORT")) ||
-        is.null(Sys.getenv("AMBHTMX_PROTOCOL"))
+  protocol <- protocol %||% "http"  
+  host <- host %||% "127.0.0.1"
+  port <- port %||% "8000"
+  if(identical(Sys.getenv("AMBHTMX_HOST"), "") || 
+        identical(Sys.getenv("AMBHTMX_PORT"), "") ||
+        identical(Sys.getenv("AMBHTMX_PROTOCOL"), "")
       ) {
-    print("Set AMBHTMX_PROTOCOL, AMBHTMX_HOST and AMBHTMX_PORT environment variables to configure the server. By default, http://127.0.0.1:8000 is set.")
+    cat(glue::glue("Set AMBHTMX_PROTOCOL, AMBHTMX_HOST and AMBHTMX_PORT environment variables to configure the server. For now, {protocol}://{host}:{port} is set."))
+  } else{
+    protocol <- Sys.getenv("AMBHTMX_PROTOCOL")
+    host <- Sys.getenv("AMBHTMX_HOST")
+    port <- Sys.getenv("AMBHTMX_PORT")
   }
-  protocol <- protocol %||% Sys.getenv("AMBHTMX_PROTOCOL") %||% "http"
-  port <- port %||% Sys.getenv("AMBHTMX_PORT") %||% "8000"
-  host <- host %||% Sys.getenv("AMBHTMX_HOST") %||% "127.0.0.1"
   if (live != "") {
     warning("live = TRUE is alpha")     
     # ps -ef | grep "nodemon --signal SIGTERM "
