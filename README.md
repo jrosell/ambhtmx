@@ -42,7 +42,7 @@ AMBHTMX_USER=<your user>
 AMBHTMX_PASSWORD=<your password>
 AMBHTMX_SECRET=<a secret key to make cookies safer>
 GITHUB_PAT=<an optional token to install github repos safely>
-AMBHTMX_PROTOCOL=<to change host default http>
+AMBHTMX_PROTOCOL=<default http but you may want to use https>
 AMBHTMX_HOST=<to change host default 127.0.0.1>
 AMBHTMX_PORT=<to change port default 3000>
 ````
@@ -75,11 +75,10 @@ AMBHTMX_PORT=<to change port default 3000>
 ### [Cleaner and shorter code hx_ to hx- replacement](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/08.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
 
-
-### [Customizable web components: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
+### [Customizable web components: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx.card3d/blob/main/app.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
 
-* [Python implementation](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.py) ([Screenshot](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
+* [Python implementation](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
 
 
 ## Deployment examples
@@ -94,7 +93,7 @@ I deployed some examples:
 
 If you want to deploy yours, when creating your user and space in HuggingFace Spaces for your repo, select a blank Dockerfile:
 
-![](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png)
+![huggingface-spaces-Dockerfile](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png)
 
 
 ## Troubleshooting

@@ -1,9 +1,5 @@
 url: https://jrosell.github.io/ambhtmx 
 
-template:
-  bootstrap: 5
-
-
 home:
   links:
   - text: ambiorix reference
