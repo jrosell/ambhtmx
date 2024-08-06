@@ -80,10 +80,9 @@ AMBHTMX_PORT=<to change port default 3000>
 
 * [Python implementation](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
 
-
 ### [Customizable web components in R: Tone.js, Web Audio framework for creating interactive music in the browser](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
-[![example](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/11.png)](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
+
 
 ## Deployment examples
 
