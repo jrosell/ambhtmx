@@ -28,7 +28,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Generate component</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jrosell/ambhtmx/blob/HEAD/R/components-amb.R" class="external-link"><code>R/components-amb.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jrosell/ambhtmx/blob/HEAD/R/components-amb.R" class="external-link"><code>R/components-amb.R</code></a>, <a href="https://github.com/jrosell/ambhtmx/blob/HEAD/R/components-htmlwidgets.R" class="external-link"><code>R/components-htmlwidgets.R</code></a></small>
       <div class="d-none name"><code>components.Rd</code></div>
     </div>
 
@@ -55,7 +55,9 @@
 <span>  hx_post <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">amb_button</span><span class="op">(</span><span class="va">...</span>, class <span class="op">=</span> <span class="st">"rounded-1"</span>, type <span class="op">=</span> <span class="st">"button"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">amb_button</span><span class="op">(</span><span class="va">...</span>, class <span class="op">=</span> <span class="st">"rounded-1"</span>, type <span class="op">=</span> <span class="st">"button"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">amb_htmlwidget</span><span class="op">(</span><span class="va">widget</span>, <span class="va">...</span>, width <span class="op">=</span> <span class="st">"100%"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,7 +65,7 @@
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>htmlobjects to add</p></dd>
+<dd><p>attributes to add to the container</p></dd>
 
 
 <dt id="arg-class">class<a class="anchor" aria-label="anchor" href="#arg-class"></a></dt>
@@ -104,6 +106,18 @@
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>customize</p></dd>
+
+
+<dt id="arg-widget">widget<a class="anchor" aria-label="anchor" href="#arg-widget"></a></dt>
+<dd><p>htmlwidget to convert as a shiny.tag</p></dd>
+
+
+<dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
+<dd><p>to customeize the width of the container</p></dd>
+
+
+<dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
+<dd><p>to customeize the width of the container</p></dd>
 
 </dl></div>
 

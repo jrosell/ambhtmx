@@ -11,15 +11,19 @@
 render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
   penv <- rlang::env_parent()
   genv <- rlang::global_env()
+  if (is_debug_enabled()) cat(glue::glue("render_page {page_title}\n\n"))
   if (is.null(page_title)){    
     page_title <- penv[["page_title"]]
   }
+  if (is_debug_enabled()) cat(glue::glue("render_page penv {page_title}\n\n"))
   if (is.null(page_title)){    
     page_title <- genv[["page_title"]]
   }
+  if (is_debug_enabled()) cat(glue::glue("render_page genv {page_title}\n\n"))
   if (is.null(page_title)){    
     page_title <- "ambhtmx"
   }
+  if (is_debug_enabled()) cat(glue::glue("render_page default {page_title}\n\n"))  
   if (is.null(main)){    
     main <- penv[["main"]]
   }

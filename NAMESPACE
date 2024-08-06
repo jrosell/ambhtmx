@@ -2,6 +2,7 @@
 
 export(amb_button)
 export(amb_card)
+export(amb_htmlwidget)
 export(amb_input_text)
 export(ambhtmx)
 export(button)

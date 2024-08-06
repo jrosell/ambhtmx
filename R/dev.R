@@ -88,11 +88,9 @@ rebuild_docs_and_check <- function() {
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
   # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)
-  usethis::use_namespace()  
-  devtools::document()
+  usethis::use_namespace()      
+  devtools::check(document = TRUE)  
   pkgdown::build_site(preview = FALSE)
   utils::browseURL(here::here("docs", "index.html"), browser = "firefox")
-  devtools::check()
-  devtools::load_all()
   # usethis::use_version(which = "dev", push = FALSE)
 }
