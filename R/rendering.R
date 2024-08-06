@@ -101,7 +101,7 @@ send_tags <- \(main = NULL, res, ...) {
       }
     },
     error = \(e) print(e)
-  )
+  )  
   res$send(html)
 }
 
@@ -113,7 +113,9 @@ send_tags <- \(main = NULL, res, ...) {
 #' @returns a character representation of input
 #' @export
 render_tags <- \(...) {
-  as.character(htmltools::tagList(...))
+  html_tags <- htmltools::tagList(...)
+  html <- replace_hx_attrs(html_tags)
+  as.character(html)
 }
 
 #' Render a png image to a img tag
@@ -131,6 +133,8 @@ render_png <- \(p){
 
 #' @noRd
 replace_hx_attrs <- function(x) {
+  print("replace_hx_attrs")
+  print(class(x))
   if (is.list(x)) {
     # Check if the element has a named list called 'attribs'
     if ("attribs" %in% names(x)) {

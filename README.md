@@ -75,11 +75,15 @@ AMBHTMX_PORT=<to change port default 3000>
 ### [Cleaner and shorter code hx_ to hx- replacement](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/08.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/08-hx_attributes.R)
 
-### [Customizable web components: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx.card3d/blob/main/app.R)
+### [Customizable web components in R: Port to R of card3d from FastHTML](https://github.com/jrosell/ambhtmx.card3d/blob/main/app.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09.png)](https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R)
 
-* [Python implementation](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png)). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
+* [Python implementation](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png). Original python code credit to [AnswerDotAI/fasthtml](https://fastht.ml/), Design credit: https://codepen.io/markmiro/pen/wbqMPa
 
+
+### [Customizable web components in R: Tone.js, Web Audio framework for creating interactive music in the browser](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
+[![example](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
+[![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/11.png)](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
 
 ## Deployment examples
 
