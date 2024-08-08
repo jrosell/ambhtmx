@@ -50,7 +50,7 @@ render_page <- \(main = NULL, page_title = NULL, head_tags = NULL) {
     tags$head(
       tags$title(page_title),
       tags$style("body {background-color:white;}"),
-      tags$script(src = "//unpkg.com/htmx.org@2.0.1"),
+      tags$script(src = "https://unpkg.com/htmx.org@2.0.1"),
       head_tags,      
     ),
     tags$body(
