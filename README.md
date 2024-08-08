@@ -83,6 +83,9 @@ AMBHTMX_PORT=<to change port default 3000>
 ### [Customizable web components in R: Tone.js, Web Audio framework for creating interactive music in the browser](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
 [![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/11.png)](https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R)
 
+### [Customizable web components in R: Artyom.js, Speech recognition from the browser to R](https://github.com/jrosell/ambhtmx.artyom/blob/main/app.R)
+[![example](https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/12.png)](https://github.com/jrosell/ambhtmx.artyom/blob/main/app.R)
+
 
 ## Deployment examples
 
