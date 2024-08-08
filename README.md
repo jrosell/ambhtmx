@@ -95,6 +95,10 @@ I deployed some examples:
 
 * [ambhtmx.crud](https://github.com/jrosell/ambhtmx.crud) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.crud))
 * [ambhtmx.card3d](https://github.com/jrosell/ambhtmx.card3d) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.card3d))
+* [ambhtmx.tonejs]https://huggingface.co/spaces/jrosell/ambhtmx.tonejs) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.tonejs))
+* [ambhtmx.artyom]https://huggingface.co/spaces/jrosell/ambhtmx.artyom) (on [HuggingFace Spaces](https://huggingface.co/spaces/jrosell/ambhtmx.artyom))
+
+
 
 
 If you want to deploy yours, when creating your user and space in HuggingFace Spaces for your repo, select a blank Dockerfile:
