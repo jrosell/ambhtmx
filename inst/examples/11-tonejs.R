@@ -1,5 +1,5 @@
-devtools::load_all()
-# library(ambhtmx)
+# devtools::load_all()
+library(ambhtmx)
 
 live_path <- tryCatch(
   {this.path::this.path()},
@@ -42,7 +42,7 @@ amb_tonejs <- \(
     style = "margin : 10px; float: left;",    
     button(id = id, button_text),         
     script(HTML(script_chr)),    
-    a("x", style = "color: red; text-decoration: none", href = "/", hx_delete="/delete", hx_confirm = glue('Are you sure you want to delete "{button_text}"?'), hx_swap = "outerHTML", hx_target = glue(".{id}"))
+    a("x", style = "color: red; text-decoration: none", href="#", hx_delete="/delete", hx_confirm = glue('Are you sure you want to delete "{button_text}"?'), hx_swap = "outerHTML", hx_target = glue(".{id}"))
   )
 }
 
