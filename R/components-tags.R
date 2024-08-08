@@ -76,7 +76,7 @@ script <- htmltools::tags$script
 #' 
 #' @keywords components
 #' @rdname style_from_css_tpl
-#' @param file path to a js file
+#' @param file path to a css file
 #' @param ... mutiple named arguments with the value to replaces
 #' @examples
 #' if (FALSE){
@@ -87,6 +87,27 @@ script <- htmltools::tags$script
 style_from_css_tpl <- \(file, ...) {
   html <- ""
   raw_content <- readr::read_file(file)
+  content <- style_tpl_css_vars_replace(raw_content, ...)
+  tryCatch(
+    expr = {
+      html <- htmltools::HTML("<style>", content, "</style>")
+    },
+    error = \(e) {
+      print(e)
+    }
+  )
+  return(html)
+}
+
+#' Generate style from raw css
+#' 
+#' @keywords components
+#' @rdname style_tpl
+#' @param raw_content contents with tpl in css
+#' @param ... mutiple named arguments with the value to replaces
+#' @export
+style_tpl <- \(raw_content, ...) {
+  html <- ""
   content <- style_tpl_css_vars_replace(raw_content, ...)
   tryCatch(
     expr = {
@@ -128,6 +149,28 @@ style_tpl_css_vars_replace <- \(content, ...){
 script_from_js_tpl <- \(file, ...) {
   html <- ""
   raw_content <- readr::read_file(file)
+  content <- script_tpl_js_vars_replace(raw_content, ...)
+  tryCatch(
+    expr = {
+      html <- htmltools::HTML("<script>", content, "</script>")
+    },
+    error = \(e) {
+      print(e)
+    }
+  )
+  return(html)
+}
+
+
+#' Generate script from raw js template
+#' 
+#' @keywords components
+#' @rdname script_tpl
+#' @param raw_content path to a js file
+#' @param ... mutiple named arguments with the value to replace
+#' @export
+script_tpl <- \(raw_content, ...) {
+  html <- ""
   content <- script_tpl_js_vars_replace(raw_content, ...)
   tryCatch(
     expr = {

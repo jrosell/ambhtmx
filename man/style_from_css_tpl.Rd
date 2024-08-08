@@ -7,7 +7,7 @@
 style_from_css_tpl(file, ...)
 }
 \arguments{
-\item{file}{path to a js file}
+\item{file}{path to a css file}
 
 \item{...}{mutiple named arguments with the value to replaces}
 }
