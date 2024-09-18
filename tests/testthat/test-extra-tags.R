@@ -1,3 +1,5 @@
+
+
 test_that('style_tpl_css_vars_replace works tpl_replace for one tpl variable', {
   result <- style_tpl_css_vars_replace("me { background: var(--tpl-bgurl) center}", bgurl = "url(/icon.png)")
   expected <- "me { background: url(/icon.png) center}"
@@ -16,7 +18,13 @@ test_that('style_from_css_tpl works', {
     as.character(style_from_css_tpl(temp_css_file, bgurl = "url(/icon.png)"))
   })
   expected <- "<style> me { background: url(/icon.png) center}\n </style>"
-  expect_equal(result, expected)
+  normalize_line_endings <- \(text) {
+    gsub("\r\n|\n|\r", "\n", text)
+  }
+  expect_equal(
+    normalize_line_endings(result),
+    normalize_line_endings(expected)
+  )
 })
 
 test_that('script_tpl_js_vars_replace works', {
