@@ -27,7 +27,7 @@ rebuild_docs_and_check <- function() {
       ),
       Language =  "en"
   ))
-  usethis::use_package("R", type = "Depends", min_version = "4.4")
+  usethis::use_package("R", type = "Depends", min_version = "4.3")
   usethis::use_cc0_license()
   suggests_packages <- c(
       "pak",
