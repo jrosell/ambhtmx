@@ -1,6 +1,6 @@
 Package: ambhtmx
 Title: ambhtmx
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: 
     person("Jordi", "Rosell", , "jroselln@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4349-1458"))
@@ -9,9 +9,9 @@ License: CC0
 Encoding: UTF-8
 Language: en
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1.9000
+RoxygenNote: 7.3.2
 Depends: 
-    R (>= 4.4)
+    R (>= 4.3)
 Suggests: 
     dbplyr,
     devtools,
@@ -42,7 +42,7 @@ Imports:
     tibble,
     uwu (>= 0.0.0.9000),
     withr
-Remotes:  
+Remotes: 
     devOpifex/ambiorix,
     devOpifex/scilis,
     devOpifex/signaculum,
