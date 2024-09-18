@@ -45,6 +45,7 @@ GITHUB_PAT=<an optional token to install github repos safely>
 AMBHTMX_PROTOCOL=<default http but you may want to use https>
 AMBHTMX_HOST=<to change host default 127.0.0.1>
 AMBHTMX_PORT=<to change port default 3000>
+R_SHARE_DIR=/usr/share/R/share/ # change it if required
 ````
 
 ## Code examples

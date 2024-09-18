@@ -64,8 +64,7 @@
   <div class="contents col-md-9">
 
 
-<!-- badges: end -->
-<p><strong>THIS IS A WORK IN PROGRESS, DO NOT USE</strong></p>
+<!-- badges: end --><p><strong>THIS IS A WORK IN PROGRESS, DO NOT USE</strong></p>
 <div class="section level1">
 <div class="page-header"><h1 id="ambhtmx">ambhtmx<a class="anchor" aria-label="anchor" href="#ambhtmx"></a>
 </h1></div>
@@ -98,7 +97,8 @@ AMBHTMX_SECRET=&lt;a secret key to make cookies safer&gt;
 GITHUB_PAT=&lt;an optional token to install github repos safely&gt;
 AMBHTMX_PROTOCOL=&lt;default http but you may want to use https&gt;
 AMBHTMX_HOST=&lt;to change host default 127.0.0.1&gt;
-AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
+AMBHTMX_PORT=&lt;to change port default 3000&gt;
+R_SHARE_DIR=/usr/share/R/share/</code></pre>
 </div>
 <div class="section level2">
 <h2 id="code-examples">Code examples<a class="anchor" aria-label="anchor" href="#code-examples"></a>
@@ -156,17 +156,21 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 <a href="https://github.com/jrosell/ambhtmx.card3d/blob/main/app.R" class="external-link">Customizable web components in R: Port to R of card3d from FastHTML</a><a class="anchor" aria-label="anchor" href="#customizable-web-components-in-r-port-to-r-of-card3d-from-fasthtml"></a>
 </h3>
 <p><a href="https://github.com/jrosell/ambhtmx/blob/main/inst/examples/09-card3d.R" class="external-link"><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09.png" alt="example"></a></p>
-<ul>
-<li>
+<ul><li>
 <a href="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/09py.png" class="external-link">Python implementation</a>. Original python code credit to <a href="https://fastht.ml/" class="external-link">AnswerDotAI/fasthtml</a>, Design credit: <a href="https://codepen.io/markmiro/pen/wbqMPa" class="external-link uri">https://codepen.io/markmiro/pen/wbqMPa</a>
-</li>
-</ul>
+</li></ul>
 </div>
 <div class="section level3">
 <h3 id="customizable-web-components-in-r-tonejs-web-audio-framework-for-creating-interactive-music-in-the-browser">
 <a href="https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R" class="external-link">Customizable web components in R: Tone.js, Web Audio framework for creating interactive music in the browser</a><a class="anchor" aria-label="anchor" href="#customizable-web-components-in-r-tonejs-web-audio-framework-for-creating-interactive-music-in-the-browser"></a>
 </h3>
 <p><a href="https://github.com/jrosell/ambhtmx.tonejs/blob/main/app.R" class="external-link"><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/11.png" alt="example"></a></p>
+</div>
+<div class="section level3">
+<h3 id="customizable-web-components-in-r-artyomjs-speech-recognition-from-the-browser-to-r">
+<a href="https://github.com/jrosell/ambhtmx.artyom/blob/main/app.R" class="external-link">Customizable web components in R: Artyom.js, Speech recognition from the browser to R</a><a class="anchor" aria-label="anchor" href="#customizable-web-components-in-r-artyomjs-speech-recognition-from-the-browser-to-r"></a>
+</h3>
+<p><a href="https://github.com/jrosell/ambhtmx.artyom/blob/main/app.R" class="external-link"><img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/12.png" alt="example"></a></p>
 </div>
 </div>
 <div class="section level2">
@@ -179,10 +183,12 @@ AMBHTMX_PORT=&lt;to change port default 3000&gt;</code></pre>
 <a href="https://github.com/jrosell/ambhtmx.crud" class="external-link">ambhtmx.crud</a> (on <a href="https://huggingface.co/spaces/jrosell/ambhtmx.crud" class="external-link">HuggingFace Spaces</a>)</li>
 <li>
 <a href="https://github.com/jrosell/ambhtmx.card3d" class="external-link">ambhtmx.card3d</a> (on <a href="https://huggingface.co/spaces/jrosell/ambhtmx.card3d" class="external-link">HuggingFace Spaces</a>)</li>
+<li>[ambhtmx.tonejs]<a href="https://huggingface.co/spaces/jrosell/ambhtmx.tonejs" class="external-link uri">https://huggingface.co/spaces/jrosell/ambhtmx.tonejs</a>) (on <a href="https://huggingface.co/spaces/jrosell/ambhtmx.tonejs" class="external-link">HuggingFace Spaces</a>)</li>
+<li>[ambhtmx.artyom]<a href="https://huggingface.co/spaces/jrosell/ambhtmx.artyom" class="external-link uri">https://huggingface.co/spaces/jrosell/ambhtmx.artyom</a>) (on <a href="https://huggingface.co/spaces/jrosell/ambhtmx.artyom" class="external-link">HuggingFace Spaces</a>)</li>
 </ul>
 <p>If you want to deploy yours, when creating your user and space in HuggingFace Spaces for your repo, select a blank Dockerfile:</p>
-<div class="float">
-<img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png" alt="huggingface-spaces-Dockerfile"><div class="figcaption">huggingface-spaces-Dockerfile</div>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/jrosell/ambhtmx/main/inst/examples/huggingface-spaces-Dockerfile.png" alt=""><p class="caption">huggingface-spaces-Dockerfile</p>
 </div>
 </div>
 <div class="section level2">

@@ -15,6 +15,7 @@ rebuild_docs_and_check <- function() {
   devtools::load_all()
   devtools::test(stop_on_failure  = TRUE)
   previous_version <- "0.0.0.9002"
+  print("description........")
   usethis::use_description(list(
       "Title" = "ambhtmx",
       "Description" = "Build a Full-stack R App with ambiorix and htmx.",
@@ -87,9 +88,12 @@ rebuild_docs_and_check <- function() {
 
   # spain_ccaas <- readr::read_rds("inst/extdata/spain_ccaas.rds")
   # spain_provinces <- readr::read_rds("inst/extdata/spain_provinces.rds")
-  # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)
-  usethis::use_namespace()      
-  devtools::check(document = TRUE)  
+  # usethis::use_data(spain_ccaas, spain_provinces, overwrite = TRUE)  
+  print("check........")
+  devtools::check(document = FALSE)    
+  print("document........")
+  devtools::document()
+  print("build_site........")
   pkgdown::build_site(preview = FALSE)
   utils::browseURL(here::here("docs", "index.html"), browser = "firefox")
   # usethis::use_version(which = "dev", push = FALSE)
